@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace NIOKR_Main.Models
+namespace Hackathon_TEK.Models
 {
     /// <summary>
     /// Базовый класс

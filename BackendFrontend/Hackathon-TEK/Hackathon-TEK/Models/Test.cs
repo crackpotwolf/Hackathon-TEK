@@ -1,4 +1,4 @@
-﻿using NIOKR_Main.Models;
+﻿using Hackathon_TEK.Models;
 
 namespace Hackathon_TEK.Models
 {
