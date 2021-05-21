@@ -4,6 +4,30 @@
         <name>Hackathon-TEK</name>
     </assembly>
     <members>
+        <member name="M:Hackathon_TEK.Controllers.API.EarthquakesController.Get">
+            <summary>
+            Получение списка землетрясений
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.EarthquakesController.Post(System.Collections.Generic.List{Hackathon_TEK.Models.Earthquake})">
+            <summary>
+            Запись списка землетрясений
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.FiresController.Get">
+            <summary>
+            Получение списка пожаров
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.FiresController.Post(System.Collections.Generic.List{Hackathon_TEK.Models.Fire})">
+            <summary>
+            Запись списка пожаров
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Hackathon_TEK.Controllers.API.ReasonsController.Get">
             <summary>
             Получение списка причин
