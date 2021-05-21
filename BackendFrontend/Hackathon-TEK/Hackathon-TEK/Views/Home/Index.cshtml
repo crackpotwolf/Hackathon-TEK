@@ -1,0 +1,35 @@
+﻿@{ ViewData["Title"] = "Home"; }
+
+<script>
+    function LoadList() {
+        $("#listPartial").html();
+
+        $.ajax({
+            url: '@Url.Action("HomeView", "Home")',
+            type: 'GET',
+            data: { },
+            success: function(result) {
+                $("#listPartial").html(result);
+            },
+            complete: function () {
+            }
+        });
+    }
+    $(document).ready(function() {
+        LoadList();
+    });
+</script>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div style="text-align:center">
+
+            <span class="font-weight dates">
+                Выбор даты:
+            </span>
+
+        </div>
+    </div>
+</div>
+
+<div id="listPartial" class="listPartial"></div>
