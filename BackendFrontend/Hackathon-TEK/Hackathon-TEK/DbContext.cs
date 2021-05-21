@@ -7,6 +7,14 @@ namespace Hackathon_TEK
     {
         public virtual DbSet<Test> Tests { get; set; }
 
+        public virtual DbSet<Region> Regions { get; set; }
+
+        public virtual DbSet<Reason> Reasons { get; set; }
+
+        public virtual DbSet<Fire> Fires { get; set; }
+
+        public virtual DbSet<Earthquake> Earthquakes { get; set; }
+
         public HackathonContext()
         { }
 

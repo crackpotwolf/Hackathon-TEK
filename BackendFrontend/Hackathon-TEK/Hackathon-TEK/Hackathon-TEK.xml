@@ -4,6 +4,54 @@
         <name>Hackathon-TEK</name>
     </assembly>
     <members>
+        <member name="M:Hackathon_TEK.Controllers.API.EarthquakesController.Get">
+            <summary>
+            Получение списка землетрясений
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.EarthquakesController.Post(System.Collections.Generic.List{Hackathon_TEK.Models.Earthquake})">
+            <summary>
+            Запись списка землетрясений
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.FiresController.Get">
+            <summary>
+            Получение списка пожаров
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.FiresController.Post(System.Collections.Generic.List{Hackathon_TEK.Models.Fire})">
+            <summary>
+            Запись списка пожаров
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.ReasonsController.Get">
+            <summary>
+            Получение списка причин
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.ReasonsController.Post(System.Collections.Generic.List{Hackathon_TEK.Models.Reason})">
+            <summary>
+            Запись списка причин
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.RegionDataController.Get">
+            <summary>
+            Получение списка регионов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.RegionDataController.Post(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.Collections.Generic.List{System.Double}}}})">
+            <summary>
+            Запись списка регионов
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Hackathon_TEK.Interfaces.IEntity">
             <summary>
             Базовый интерфейс
@@ -17,6 +65,86 @@
         <member name="P:Hackathon_TEK.Interfaces.IEntity.IsDelete">
             <summary>
             Флаг удаления
+            </summary>
+        </member>
+        <member name="T:Hackathon_TEK.Models.AbstractEntity">
+            <summary>
+            Базовый класс
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.AbstractEntity.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.AbstractEntity.IsDelete">
+            <summary>
+            Флаг удаления
+            </summary>
+        </member>
+        <member name="T:Hackathon_TEK.Models.Fire">
+            <summary>
+            Данные о пожарах
+            </summary>
+        </member>
+        <member name="T:Hackathon_TEK.Models.Reason">
+            <summary>
+            Причины возникновения ЧС
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Reason.IndustryType">
+            <summary>
+            Тип индустрии
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Reason.EventType">
+            <summary>
+            Тип события
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Reason.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Reason.ReasonDescription">
+            <summary>
+            Причина
+            </summary>
+        </member>
+        <member name="T:Hackathon_TEK.Models.Region">
+            <summary>
+            Регион (субъект федерации)
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Region.Name">
+            <summary>
+            Наименование
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Region.Coordinates">
+            <summary>
+            Полигон
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Region.RssUrl">
+            <summary>
+            Ссылка на RSS лонту оперативной сводки МЧС региона
+            </summary>
+        </member>
+        <member name="T:Hackathon_TEK.Models.RegionConnectedObject">
+            <summary>
+            Родительский класс для объектов, привязанных к региону
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.RegionConnectedObject.RegionId">
+            <summary>
+            Идентификатор региона
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.RegionConnectedObject.Region">
+            <summary>
+            Объект региона
             </summary>
         </member>
         <member name="T:Hackathon_TEK.Repository.AbstractRepository`1">
@@ -132,21 +260,6 @@
             </summary>
             <param name="func"></param>
             <returns></returns>
-        </member>
-        <member name="T:NIOKR_Main.Models.AbstractEntity">
-            <summary>
-            Базовый класс
-            </summary>
-        </member>
-        <member name="P:NIOKR_Main.Models.AbstractEntity.Id">
-            <summary>
-            Уникальный идентификатор
-            </summary>
-        </member>
-        <member name="P:NIOKR_Main.Models.AbstractEntity.IsDelete">
-            <summary>
-            Флаг удаления
-            </summary>
         </member>
     </members>
 </doc>
