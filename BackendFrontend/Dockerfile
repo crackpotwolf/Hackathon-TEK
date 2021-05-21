@@ -5,7 +5,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 
 WORKDIR /src
-COPY ["Hackathon-TEK/Hackathon-TEK.csproj", "Hackathon-TEK/"]
+COPY ["BackendFrontend/Hackathon-TEK/Hackathon-TEK.csproj", "Hackathon-TEK/"]
 RUN dotnet restore "Hackathon-TEK/Hackathon-TEK.csproj"
 
 COPY . .
