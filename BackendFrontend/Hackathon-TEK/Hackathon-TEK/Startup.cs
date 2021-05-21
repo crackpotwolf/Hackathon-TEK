@@ -54,16 +54,27 @@ namespace Hackathon_TEK
             {
                 serviceScope.ServiceProvider.GetRequiredService<HackathonContext>().Database.Migrate();
             }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseSwagger();
@@ -72,8 +83,6 @@ namespace Hackathon_TEK
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
             });
-
-            app.UseHttpsRedirection();
         }
 
         public void AddRepositories(IServiceCollection services)

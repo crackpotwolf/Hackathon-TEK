@@ -13,3 +13,7 @@
 .content-container {
     padding-top: 20px;
 }
+
+.maps {
+    padding: 0 !important;
+}
