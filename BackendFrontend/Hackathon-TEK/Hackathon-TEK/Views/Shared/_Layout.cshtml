@@ -16,7 +16,9 @@
 
 <div class="content-container">
 
-    @RenderBody()
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
 
     @RenderSection("Scripts", required: false)
 </div>

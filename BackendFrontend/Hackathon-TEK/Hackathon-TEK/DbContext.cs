@@ -1,0 +1,18 @@
+﻿using Hackathon_TEK.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Hackathon_TEK
+{
+    public class HackathonContext : DbContext
+    {
+        public virtual DbSet<Test> Tests { get; set; }
+
+        public HackathonContext()
+        { }
+
+        public HackathonContext(DbContextOptions<HackathonContext> options) : base(options)
+        {
+
+        }
+    }
+}

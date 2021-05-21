@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Hackathon-TEK</name>
+    </assembly>
+    <members>
+        <member name="T:Hackathon_TEK.Interfaces.IEntity">
+            <summary>
+            Базовый интерфейс
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Interfaces.IEntity.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Interfaces.IEntity.IsDelete">
+            <summary>
+            Флаг удаления
+            </summary>
+        </member>
+        <member name="T:Hackathon_TEK.Repository.AbstractRepository`1">
+            <summary>
+            Базовый репозиторий
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.Add(`0)">
+            <summary>
+            Добавляет объект
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Добавляет элементы указанной коллекции
+            </summary>
+            <param name="models"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.Update(`0)">
+            <summary>
+            Обновление объекта
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.Update(System.Int32)">
+            <summary>
+            Обновление объекта
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.UpdateRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Обновление элементов указанной коллекции
+            </summary>
+            <param name="models"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.Remove(`0)">
+            <summary>
+            Удаление объекта
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.Remove(System.Int32)">
+            <summary>
+            Удаление объекта по id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.RemoveRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Удаляет элементы указанной коллекции
+            </summary>
+            <param name="models"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.Delete(`0)">
+            <summary>
+            Удаление объекта
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.GetListQuery">
+            <summary>
+            Получить коллекцию
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.GetListQueryWithDeleted">
+            <summary>
+            Получить коллекцию с удаленными объектами
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.GetList">
+            <summary>
+            Получить коллекцию
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.GetListWithDeleted">
+            <summary>
+            Получить коллекцию с удаленными объектами
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.SearchById(System.Int32)">
+            <summary>
+            Возвращает первый элемент последовательности или значение по умолчанию, если ни одного элемента не найдено
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.Any(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Проверяет существование хотя бы одного элемента в последовательности 
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Repository.AbstractRepository`1.FirstOrDefault(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Возвращает первый элемент последовательности или значение по умолчанию, если ни одного элемента не найдено
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NIOKR_Main.Models.AbstractEntity">
+            <summary>
+            Базовый класс
+            </summary>
+        </member>
+        <member name="P:NIOKR_Main.Models.AbstractEntity.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:NIOKR_Main.Models.AbstractEntity.IsDelete">
+            <summary>
+            Флаг удаления
+            </summary>
+        </member>
+    </members>
+</doc>

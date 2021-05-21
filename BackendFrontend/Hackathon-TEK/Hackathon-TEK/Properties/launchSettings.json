@@ -17,7 +17,6 @@
     },
     "Hackathon_TEK": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "Home",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

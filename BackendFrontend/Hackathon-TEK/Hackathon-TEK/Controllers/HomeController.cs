@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hackathon_TEK.Controllers
 {
@@ -15,7 +11,7 @@ namespace Hackathon_TEK.Controllers
 
         public virtual IActionResult HomeView()
         {
-            return PartialView("_HomePartial"); 
+            return PartialView("_HomePartial");
         }
 
 
