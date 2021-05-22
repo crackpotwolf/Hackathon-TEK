@@ -139,6 +139,11 @@
             Тип события
             </summary>
         </member>
+        <member name="P:Hackathon_TEK.Models.Reason.TypeObject">
+            <summary>
+            Тип объекта
+            </summary>
+        </member>
         <member name="P:Hackathon_TEK.Models.Reason.Description">
             <summary>
             Описание

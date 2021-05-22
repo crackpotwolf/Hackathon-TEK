@@ -76,5 +76,93 @@ namespace Hackathon_TEK.Controllers.API
             //reasonsRepos.AddRange(to_db);
             return Ok(to_db);
         }
+
+
+        [HttpGet("WeatherReasons2020")]
+        public IActionResult WeatherReasons2020()
+        {
+            var path = @"D:\Downloads\Preprocessing\Аварии_погода_САЦ_2020.csv";
+            var csv = new FileInfo(path).ParseCSV();
+
+            var entities = csv
+                .Skip(1)
+                .Select(fields =>
+                {
+                    return new
+                    {
+                        Date = DateTime.ParseExact(fields[1], "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        Subject = fields[2],
+                        Reason = fields[3],
+                        Description = fields[4],
+                        TypeObject = fields[5],
+                    };
+                }).ToList();
+
+            var test = regionsRepos.GetList().ToList();
+            var regions = regionsRepos.GetList().ToList()
+                .ToDictionary(p => p.Name);
+
+            var to_db = entities
+            .Where(p => p.Subject != "Крым")
+            .Select(p =>
+            {
+                return new Reason()
+                {
+                    Date = p.Date,
+                    ReasonDescription = p.Description,
+                    EventType = p.Reason,
+                    TypeObject = p.TypeObject,
+                    IsWeather = true,
+                    RegionId = regions[p.Subject].Id
+                };
+            }).ToList();
+
+            reasonsRepos.AddRange(to_db);
+            return Ok(to_db);
+        }
+
+
+        [HttpGet("AccidentReasons2020")]
+        public IActionResult AccidentReasons2020()
+        {
+            var path = @"D:\Downloads\Preprocessing\Аварии_Причины_САЦ_2020.csv";
+            var csv = new FileInfo(path).ParseCSV();
+
+            var entities = csv
+                .Skip(1)
+                .Select(fields =>
+                {
+                    return new
+                    {
+                        Date = DateTime.ParseExact(fields[1], "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        Subject = fields[2],
+                        Reason = fields[3],
+                        Description = fields[4],
+                        TypeObject = fields[5],
+                    };
+                }).ToList();
+
+            var test = regionsRepos.GetList().ToList();
+            var regions = regionsRepos.GetList().ToList()
+                .ToDictionary(p => p.Name);
+
+            var to_db = entities
+            .Where(p => p.Subject != "Крым")
+            .Select(p =>
+            {
+                return new Reason()
+                {
+                    Date = p.Date,
+                    ReasonDescription = p.Description,
+                    EventType = p.Reason,
+                    TypeObject = p.TypeObject,
+                    IsWeather = true,
+                    RegionId = regions[p.Subject].Id
+                };
+            }).ToList();
+
+            reasonsRepos.AddRange(to_db);
+            return Ok(to_db);
+        }
     }
 }

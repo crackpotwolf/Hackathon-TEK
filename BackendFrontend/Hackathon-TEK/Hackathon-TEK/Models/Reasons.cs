@@ -23,6 +23,10 @@ namespace Hackathon_TEK.Models
         public string EventType { get; set; }
 
         /// <summary>
+        /// Тип объекта
+        /// </summary>
+        public string TypeObject { get; set; }
+        /// <summary>
         /// Описание
         /// </summary>
         public string Description { get; set; }
