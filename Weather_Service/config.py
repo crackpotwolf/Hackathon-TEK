@@ -13,7 +13,7 @@ class ProductionConfig(BaseConfig):
     PATH_TO_MIDDLE_DATA = os.path.join(PATH_TO_DATA, "middle_data")
     PATH_TO_RESULT_DATA = os.path.join(PATH_TO_DATA, "result_data")
 
-    LOG_WEATHER_DATA = '/app/Data/weather_data_getter.log.log'
+    LOG_WEATHER_DATA = '/app/Data/weather_data_getter.log'
     URL_DB_SERVICE = "http://192.168.100.40:9001"
 
 
@@ -28,7 +28,7 @@ class LocalConfig(BaseConfig):
     PATH_TO_MIDDLE_DATA = os.path.join(PATH_TO_DATA, "middle_data")
     PATH_TO_RESULT_DATA = os.path.join(PATH_TO_DATA, "result_data")
 
-    LOG_WEATHER_DATA = 'weather_data_getter.log.log'
+    LOG_WEATHER_DATA = 'weather_data_getter.log'
     URL_DB_SERVICE = "http://192.168.100.40:9001"
 
 
