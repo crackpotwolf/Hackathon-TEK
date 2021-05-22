@@ -127,9 +127,9 @@ namespace Hackathon_TEK.Controllers
         public virtual IActionResult GetFeedback() 
         {
             ///список типов событий
-            var eventTypes = _reasonsRepository.GetListQuery().Select(p => p.EventType).Distinct().ToList();
+            var eventTypes = _reasonsRepository.GetListQuery().Select(p => p.EventType).Where(p=>p!=null).Distinct().ToList();
             //список типов объектов
-            var objectTypes = _reasonsRepository.GetListQuery().Select(p => p.TypeObject).Distinct().ToList();
+            var objectTypes = _reasonsRepository.GetListQuery().Select(p => p.TypeObject).Where(p=>p!=null).Distinct().ToList();
             return PartialView("_FeedbackPartial", new { eventTypes=eventTypes, objectTypes=objectTypes});
         }
     }
