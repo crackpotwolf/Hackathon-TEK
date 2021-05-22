@@ -52,6 +52,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Get">
+            <summary>
+            Получение списка погоды
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Post(System.Collections.Generic.Dictionary{System.String,Hackathon_TEK.Models.WeatherDataVM})">
+            <summary>
+            Запись списка данных о погоде
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Hackathon_TEK.Interfaces.IEntity">
             <summary>
             Базовый интерфейс
