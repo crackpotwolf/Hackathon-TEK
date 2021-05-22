@@ -102,23 +102,24 @@ namespace Hackathon_TEK.Controllers.API
             try
             {
                 var results = new List<Weather>();
-                foreach (var obj in data.Values) {
-                    var region = _regionRepository.GetListQuery().FirstOrDefault(p => p.Name == obj.station_region);
-                    foreach (var item in obj.weather_dates)
+                foreach (var obj in data) {
+                    
+                    var region = _regionRepository.GetListQuery().First(p => p.Name == obj.Value.station_region);
+                    foreach (var item in obj.Value.weather_dates)
                     {
                         var res = new Weather();
                         if (region != null)
                             res.RegionId = region.Id;
                         res.Date = new DateTime(Int32.Parse(item.Key.Split(".")[2]), Int32.Parse(item.Key.Split(".")[1]), Int32.Parse(item.Key.Split(".")[0]));
-                        
+                        res.StationId = Int32.Parse(obj.Key);
                         res.CloudsMax = item.Value.clouds_max;
                         res.HumidityMax = item.Value.humidity_max;
                         res.Percipitation = item.Value.precipitation_0;
                         res.PressureMax = item.Value.pressure_max;
-                        res.StationLat = obj.station_coordinate[0];
-                        res.StationLon = obj.station_coordinate[1];
-                        res.StationName = obj.station_name;
-                        res.StationRegion = obj.station_region;
+                        res.StationLat = obj.Value.station_coordinate[0];
+                        res.StationLon = obj.Value.station_coordinate[1];
+                        res.StationName = obj.Value.station_name;
+                        res.StationRegion = obj.Value.station_region;
                         res.TempAverage = item.Value.temp_average;
                         res.TempAverage0 = item.Value.temp_average_0;
                         res.TempDifNorm0 = item.Value.temp_dif_norm_0;
