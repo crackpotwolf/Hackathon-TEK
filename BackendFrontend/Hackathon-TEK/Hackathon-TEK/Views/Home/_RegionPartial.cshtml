@@ -1,0 +1,46 @@
+﻿@model Hackathon_TEK.ModelsView.RegionInfo
+
+<div class="card-body" id="Region">
+
+    <h4 class="text-center">@Html.DisplayFor(model => model.Name)</h4>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>Температура</td>
+                <td>+ @Html.DisplayFor(model => model.Temperature)</td>
+            </tr>
+            <tr>
+                <td>Скорость ветра</td>
+                <td>@Html.DisplayFor(model => model.WindSpeed) м/с</td>
+            </tr>
+            <tr>
+                <td>Описание</td>
+                <td>@Html.DisplayFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <td>Влажность</td>
+                <td>@Html.DisplayFor(model => model.Humidity) %</td>
+            </tr>
+            <tr>
+                <td>Вероятность пожаров</td>
+                <td>@Html.DisplayFor(model => model.Fires) %</td>
+            </tr>
+            <tr>
+                <td>Вероятность землетресений</td>
+                <td>@Html.DisplayFor(model => model.Earthquake) %</td>
+            </tr>
+            <tr>
+                <td>Повреждение</td>
+                <td>ЛЕП, ПС</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4 class="text-center">Вероятность возникновения ЧС: @Html.DisplayFor(model => model.ProbabilityEmergency) %</h4>
+
+    <div class="text-center">
+        <button type="button" class="btn btn-outline-primary">Сообщить об ошибке</button>
+    </div>
+
+</div>

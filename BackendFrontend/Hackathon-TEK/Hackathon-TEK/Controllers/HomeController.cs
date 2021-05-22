@@ -1,5 +1,6 @@
 ﻿using Hackathon_TEK.Interfaces;
 using Hackathon_TEK.Models;
+using Hackathon_TEK.ModelsView;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace Hackathon_TEK.Controllers
             {
                 var regions = _regionsRepos.GetListQuery().Select(p => new KeyValuePair<string, int>(p.MapId,new Random().Next(0,6)));
                 return regions.ToDictionary(p=>p.Key, p=>p.Value);
+
                 //return new Dictionary<string, int>()
                 //{
                 //    {"RU-KAM", 0},
@@ -40,9 +42,32 @@ namespace Hackathon_TEK.Controllers
                 //    {"RU-VGG", 6}
                 //};
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
+                throw;
+            }
+        }
 
+        public IActionResult GetRegion(string region, string region_name, string date) 
+        {
+            try
+            {
+                RegionInfo regionInfo = new RegionInfo()
+                {
+                    Name = region_name,
+                    Temperature = "",
+                    WindSpeed = "",
+                    Description = "",
+                    Humidity = "",
+                    Fires = "",
+                    Earthquake = "",
+                    ProbabilityEmergency = "46",
+                };
+
+                return PartialView("_RegionPartial", regionInfo);
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }

@@ -17,53 +17,8 @@
         <div class="card shadow mb-4">
             <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регион</label></div>
 
-            <div class="card-body">
-
-                <h4 class="text-center">Волгоградская область</h4>
-
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td>Температура</td>
-                            <td>+ 30</td>
-                        </tr>
-                        <tr>
-                            <td>Скорость ветра</td>
-                            <td>20 м/с</td>
-                        </tr>
-                        <tr>
-                            <td>Описание</td>
-                            <td>Ясно</td>
-                        </tr>
-                        <tr>
-                            <td>Влажность</td>
-                            <td>44 %</td>
-                        </tr>
-                        <tr>
-                            <td>Вероятность пожаров</td>
-                            <td>50 %</td>
-                        </tr>
-                        <tr>
-                            <td>Вероятность землетресений</td>
-                            <td> 5 %</td>
-                        </tr>
-                        <tr>
-                            <td>Повреждение</td>
-                            <td>ЛЕП, ПС</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 class="text-center">Вероятность возникновения ЧС: 25 %</h4>
-
-                <div class="progress" style="margin-top: 10px; margin-bottom:10px">
-                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                </div>
-
-                <div class="text-center">
-                    <button type="button" class="btn btn-outline-primary">Сообщить об ошибке</button>
-                </div>
-
+            <div class="card-body" id="Region">
+                <h4 class="text-center">Выберете регион ...</h4>
             </div>
 
         </div>
@@ -91,7 +46,7 @@
         $.ajax({
             url: '@Url.Action("GetRegions", "Home")',
             type: 'GET',
-            async:false,
+            async: false,
             data: { date: date},
             success: function (result) {
                 initMap(result);
@@ -193,8 +148,6 @@
                     var target = event.get('target');
                     var region = target.getParent();
 
-                    console.log(region.properties.iso);
-
                     // Если на карте выделен регион, то мы снимаем с него выделение.
                     if (highlightedRegion) {
                         highlightedRegion.options.set({ fillOpacity: 0.3 })
@@ -205,8 +158,29 @@
 
                     // Сохраним ссылку на выделенный регион.
                     highlightedRegion = region;
+
+                    var date = document.getElementById("date").value;
+
+                    $.ajax({
+                        url: '@Url.Action("GetRegion", "Home")',
+                        type: 'GET',
+                        async: false,
+                        data: { region: region.properties.iso, date: date, region_name: region.properties.region},
+                        success: function (result) {
+                            fillRegion(result);
+                        },
+                        complete: function () {
+                        }
+                    });
+
                 });
             }
         })
+
+        function fillRegion(region)
+        {
+            $("#Region").empty();
+            $("#Region").html(region);
+        }
     }
 </script>
