@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace Hackathon_TEK.Controllers
@@ -15,7 +16,7 @@ namespace Hackathon_TEK.Controllers
             return PartialView("_HomePartial");
         }
 
-        public Dictionary<string, int> GetRegions()
+        public Dictionary<string, int> GetRegions(string date)
         {
             try
             {

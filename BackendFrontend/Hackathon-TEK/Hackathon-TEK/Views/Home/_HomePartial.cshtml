@@ -28,15 +28,26 @@
 
 <script type="text/javascript">
 
-    ymaps.ready(init);
+    $(document).ready(function () {
+        flatpickr('.calendars', {
+            dateFormat: "d.m.Y",
+            "locale": "ru"
+        });
+
+        ymaps.ready(init);
+    });
 
     function init()
     {
+        $("#YMapsID").empty();
+
+        var date = document.getElementById("date").value;
+
         $.ajax({
             url: '@Url.Action("GetRegions", "Home")',
             type: 'GET',
             async:false,
-            data: {},
+            data: { date: date},
             success: function (result) {
                 initMap(result);
             },
