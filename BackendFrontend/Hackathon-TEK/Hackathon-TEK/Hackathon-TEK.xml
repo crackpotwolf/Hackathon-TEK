@@ -52,17 +52,30 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Get">
+        <member name="M:Hackathon_TEK.Extensions.FileExtensions.WriteToFile(System.IO.FileInfo,System.String)">
             <summary>
-            Получение списка погоды
+            Запись текста в файл
             </summary>
+            <param name="file">Файл</param>
+            <param name="text">Текст</param>
             <returns></returns>
         </member>
-        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Post(System.Collections.Generic.Dictionary{System.String,Hackathon_TEK.Models.WeatherDataVM})">
+        <member name="M:Hackathon_TEK.Extensions.FileExtensions.ParseCSV(System.IO.FileInfo,System.String)">
             <summary>
-            Запись списка данных о погоде
+            Парсинг CSV файла
             </summary>
-            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Extensions.FileExtensions.ReadAllFile(System.IO.FileInfo,System.String@)">
+            <summary>
+            Получить весь текст из файла
+            </summary>
+            <param name="file">Файл</param>
+            <param name="text">Переменная, куда сохранить текст из файла</param>
+            <returns>
+            Код ошибки
+             0 - Успешно
+            -1 - Файл не существует
+            </returns>
         </member>
         <member name="T:Hackathon_TEK.Interfaces.IEntity">
             <summary>
@@ -122,6 +135,11 @@
         <member name="P:Hackathon_TEK.Models.Reason.ReasonDescription">
             <summary>
             Причина
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Reason.IsWeather">
+            <summary>
+            Причина относится к погодным данным
             </summary>
         </member>
         <member name="T:Hackathon_TEK.Models.Region">

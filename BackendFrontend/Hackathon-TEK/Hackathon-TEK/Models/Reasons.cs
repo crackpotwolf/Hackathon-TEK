@@ -31,5 +31,10 @@ namespace Hackathon_TEK.Models
         /// Причина
         /// </summary>
         public string ReasonDescription { get; set; }
+
+        /// <summary>
+        /// Причина относится к погодным данным
+        /// </summary>
+        public bool IsWeather { get; set; } = false;
     }
 }

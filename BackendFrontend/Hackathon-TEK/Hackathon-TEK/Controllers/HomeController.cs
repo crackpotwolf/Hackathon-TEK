@@ -13,9 +13,5 @@ namespace Hackathon_TEK.Controllers
         {
             return PartialView("_HomePartial");
         }
-
-
-
-
     }
 }
