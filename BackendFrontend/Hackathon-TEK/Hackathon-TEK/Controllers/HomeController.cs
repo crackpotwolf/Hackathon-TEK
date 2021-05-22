@@ -82,19 +82,9 @@ namespace Hackathon_TEK.Controllers
         {
             try
             {
-                List<RegionsInfo> regionsInfo = new List<RegionsInfo>()
-                {
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Амурская область", Probably = "80"} },
-                    {new RegionsInfo {Name = "Алтайский край", Probably = "30" } }
-                };
+                var regions = _regionsRepos.GetListQuery().Select(p => new KeyValuePair<string, int>(p.Name, new Random().Next(0, 100)));
+
+                var regionsInfo = regions.Select(p => new RegionsInfo() { Name = p.Key, Probably = p.Value.ToString() }).ToList();
 
                 return PartialView("_RegionsPartial", regionsInfo);
             }
