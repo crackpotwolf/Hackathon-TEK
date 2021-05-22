@@ -18,7 +18,7 @@
             <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регион</label></div>
 
             <div class="card-body align-middle" id="Region">
-                <h4 class="text-center">Выберете регион ...</h4>
+                <h4 class="text-center">Выберите регион ...</h4>
             </div>
 
         </div>
@@ -28,17 +28,11 @@
 
 <div class="row">
 
-    <div class="col-xl-4">
+    <div class="col-xl-3">
         <div class="card shadow mb-4 maprows">
             <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регионы</label></div>
 
-            <div class="card-body" id="Region">
-
-                <div class="card-body regions" id="Region">
-
-                    
-                </div>
-            </div>
+            <div class="card-body regions" id="Regions" style="padding: 0.3rem;"></div>
 
         </div>
     </div>
@@ -61,17 +55,29 @@
         $("#YMapsID").empty();
 
         $("#Region").empty();
-        $("#Region").html('<h4 class="text-center">Выберете регион ...</h4>');
+        $("#Region").html('<h4 class="text-center">Выберите регион ...</h4>');
+
+        $("#Regions").empty();
 
         var date = document.getElementById("date").value;
 
         $.ajax({
             url: '@Url.Action("GetRegions", "Home")',
             type: 'GET',
-            async: false,
             data: { date: date},
             success: function (result) {
                 initMap(result);
+            },
+            complete: function () {
+            }
+        });
+
+        $.ajax({
+            url: '@Url.Action("GetRegionsWithProbably", "Home")',
+            type: 'GET',
+            data: { date: date},
+            success: function (result) {
+                fillRegions(result);
             },
             complete: function () {
             }
@@ -206,5 +212,10 @@
         }
     }
 
+    function fillRegions(regions)
+    {
+        $("#Regions").empty();
+        $("#Regions").html(regions);
+    }
 
 </script>

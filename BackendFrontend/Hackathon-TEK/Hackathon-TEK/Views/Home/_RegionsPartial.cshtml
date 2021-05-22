@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Hackathon_TEK.ModelsView.RegionsInfo>
+
+<div class="card-body" id="Region">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Регион</th>
+                <th scope="col">Вероятность ЧС</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Probably</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
