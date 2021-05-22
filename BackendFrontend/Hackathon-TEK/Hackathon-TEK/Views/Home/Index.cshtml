@@ -1,0 +1,27 @@
+﻿@{ ViewData["Title"] = "Home"; }
+
+<script>
+    function LoadList() {
+        $("#listPartial").html();
+
+        $.ajax({
+            url: '@Url.Action("HomeView", "Home")',
+            type: 'GET',
+            data: { },
+            success: function(result) {
+                $("#listPartial").html(result);
+            },
+            complete: function () {
+            }
+        });
+    }
+    $(document).ready(function() {
+        LoadList();
+    });
+</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="listPartial"></div>
+    </div>
+</div>

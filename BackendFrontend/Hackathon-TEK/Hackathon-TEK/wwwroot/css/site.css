@@ -1,0 +1,19 @@
+﻿.container-fluid {
+    top: 90px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.listPartial {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.content-container {
+    padding-top: 20px;
+}
+
+.maps {
+    padding: 0 !important;
+}

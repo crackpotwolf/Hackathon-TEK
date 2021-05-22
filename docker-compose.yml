@@ -1,0 +1,12 @@
+﻿version: '3.4'
+
+services:
+  hackathon:
+    image: "hackathon:${TAG}"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - 80:80
