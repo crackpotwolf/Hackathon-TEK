@@ -52,6 +52,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Get">
+            <summary>
+            Получение списка погоды
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Post(System.Collections.Generic.Dictionary{System.String,Hackathon_TEK.Models.WeatherDataVM})">
+            <summary>
+            Запись списка данных о погоде
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Hackathon_TEK.Extensions.FileExtensions.WriteToFile(System.IO.FileInfo,System.String)">
             <summary>
             Запись текста в файл
@@ -160,6 +172,11 @@
         <member name="P:Hackathon_TEK.Models.Region.RssUrl">
             <summary>
             Ссылка на RSS лонту оперативной сводки МЧС региона
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Region.MapId">
+            <summary>
+            Идентификатор региона на карте 
             </summary>
         </member>
         <member name="T:Hackathon_TEK.Models.RegionConnectedObject">

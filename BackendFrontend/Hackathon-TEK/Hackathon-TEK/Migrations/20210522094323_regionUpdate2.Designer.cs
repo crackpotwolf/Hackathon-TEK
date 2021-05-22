@@ -3,15 +3,17 @@ using System;
 using Hackathon_TEK;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hackathon_TEK.Migrations
 {
     [DbContext(typeof(HackathonContext))]
-    partial class HackathonContextModelSnapshot : ModelSnapshot
+    [Migration("20210522094323_regionUpdate2")]
+    partial class regionUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,9 +252,6 @@ namespace Hackathon_TEK.Migrations
                         .HasColumnType("integer");
 
                     b.Property<double>("StationLat")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("StationLon")
                         .HasColumnType("double precision");
 
                     b.Property<string>("StationName")
