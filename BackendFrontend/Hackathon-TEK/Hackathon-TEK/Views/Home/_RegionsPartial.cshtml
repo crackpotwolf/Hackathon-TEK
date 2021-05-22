@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<Hackathon_TEK.ModelsView.RegionsInfo>
 
-<div class="card-body" id="Region">
-    <table class="table table-striped">
+<div class="card-body">
+    <table id="RegionsTable" class="table">
         <thead>
             <tr>
+                <th></th>
                 <th scope="col">Регион</th>
                 <th scope="col">Вероятность ЧС</th>
             </tr>
@@ -12,6 +13,7 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>Id</td>
                     <td>@item.Name</td>
                     <td>@item.Probably</td>
                 </tr>
@@ -19,3 +21,12 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    let opt = {
+        "scrollY": "330px",
+        "scrollCollapse": true
+    };
+
+    initTable("RegionsTable", false, true, true, true, true, additionalOpt = opt);
+</script>
