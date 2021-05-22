@@ -31,10 +31,7 @@ namespace Hackathon_TEK.Models
         public double Track { get; set; }
 
         [JsonProperty("ACQ_DATE")]
-        public DateTime AcqDate { get; set; }
-
-        [JsonProperty("ACQ_TIME")]
-        public DateTime AcqTime { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty("SATELLITE")]
         public string Satellite { get; set; }
@@ -46,7 +43,7 @@ namespace Hackathon_TEK.Models
         public string Version { get; set; }
 
         [JsonProperty("BRIGHT_T31")]
-        public string Bright_t31 { get; set; }
+        public double BrightT31 { get; set; }
 
         [JsonProperty("FRP")]
         public double Frp { get; set; }
