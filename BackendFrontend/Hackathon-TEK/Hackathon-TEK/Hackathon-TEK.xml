@@ -4,6 +4,12 @@
         <name>Hackathon-TEK</name>
     </assembly>
     <members>
+        <member name="M:Hackathon_TEK.Controllers.API.AnalyzesController.Post(System.Collections.Generic.List{Hackathon_TEK.Models.Analyze})">
+            <summary>
+            Запись списка анализов
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Hackathon_TEK.Controllers.API.EarthquakesController.Get">
             <summary>
             Получение списка землетрясений
