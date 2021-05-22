@@ -28,3 +28,9 @@ def read_from_json_in_dir(filename, dir):
     else:
       with open(path_to_read, "r", encoding="utf-8") as filejson:
         return json.load(filejson)
+      
+
+def delete_json_in_dir(filename, dir):
+  # path_to_delete = os.path.join(app.config['PATH_TO_DATA'], dir)
+  path_to_delete = os.path.join(PATH_TO_DATA, dir)
+  os.remove(path_to_delete)

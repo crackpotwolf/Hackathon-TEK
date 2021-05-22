@@ -153,11 +153,11 @@ class POGODAKLIMAT_SOURCE_DATA:
               else:
                 break
 
-        write_to_json_in_dir(
-            filename="pogodaklimat_day_data_from_station%s.json" %str(station_id),
-            data=self.data_station_temperature_day[station_id],
-            dir="middle_data"
-        )
+        # write_to_json_in_dir(
+        #     filename="pogodaklimat_day_data_from_station%s.json" %str(station_id),
+        #     data=self.data_station_temperature_day[station_id],
+        #     dir="middle_data"
+        # )
 
   def parse_pogodaklimat_station_ids(self):
     # определение текущего года и месяца
@@ -190,51 +190,3 @@ class POGODAKLIMAT_SOURCE_DATA:
             station_id = int(cells_values[0]) if not cells_values[0] is None and \
               not cells_values[0].lower() in ["none", "null", "", " "] else None
             self.russian_stations_ids.append(station_id)
-
-        # headers_rus = []
-        # main_headers = []
-        # sub_headers = []
-        # for i_row, row in enumerate(rows):
-        #   if i_row < 2:
-        #     # определение заголовков в таблице
-        #     if i_row == 0:
-        #       # забрать основные заголовки
-        #       main_headers = row.text.split("\n")
-        #       upd_main_headers = [
-        #           header for header in main_headers if header != '']
-        #       main_headers = upd_main_headers
-        #     else:
-        #       # забрать подзаголовки
-        #       sub_headers = row.text.split("\n")
-        #       upd_sub_headers = [
-        #           header for header in sub_headers if header != '']
-        #       sub_headers = upd_sub_headers
-        #       # сформирвать общие заголовки
-        #       headers_rus += main_headers[:2]
-        #       for i_main_header, main_header in enumerate(main_headers):
-        #         if i_main_header < 2:
-        #           headers_rus.append(main_header)
-        #         else:
-        #           for i_sub_header, sub_header in enumerate(sub_headers):
-        #             if (i_main_header < 3 and i_sub_header < i_main_header) or \
-        #               (i_main_header >= 3 and i_sub_header >= i_main_header):
-        #               new_header = "%s (%s)" % (main_header, sub_header)
-        #               headers_rus.append(new_header)
-        #   else:
-        #     # считывание основных значений строк
-        #     row_text = row.text[1:-1]
-        #     cells_values = row_text.split("\n")
-        #     if len(cells_values) == 1:
-        #       if cells_values[0] != "Россия":
-        #         break
-        #       else:
-        #         continue
-        #     else:
-        #       new_obj = {}
-        #       for i_header, header in enumerate(headers_rus):
-        #         if i_header < len(cells_values):
-        #           new_obj[header] = cells_values[i_header]
-        #         # else:
-        #         #   new_obj[header] = "%s&id=%s" % (current_url, new_obj[headers_rus[0]])
-
-        #       self.data_station_temperature_month.append(new_obj)
