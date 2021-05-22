@@ -21,6 +21,8 @@
     <script src="~/node_modules/flatpickr/dist/flatpickr.min.js"></script>
     <script src="~/node_modules/flatpickr/dist/l10n/ru.js"></script>
 
+    <link href="~/node_modules/datatables/media/css/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/node_modules/datatables/media/js/jquery.dataTables.js"></script>
 </head>
 
 <div class="content-container">
@@ -29,5 +31,70 @@
         @RenderBody()
     </div>
 
+    <partial name="_ModalPartial" />
     @RenderSection("Scripts", required: false)
 </div>
+
+<script>
+    function initTable(div_id, paging = true, info = true, searching = true, ordering = true, fixedHeader = true, additionalOpt = undefined, language = undefined)
+    {
+        var table = $("body").find('#' + div_id);
+        table.addClass("table-sm display no-wrap table-hover");
+        table.attr("width", "100%");
+
+        var language_opt_default = {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Пред.",
+                "next": "След.",
+                "last": "Посл."
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+        };
+
+        var language_opt = Object.assign({}, language_opt_default, language);
+
+        var opt = {
+            'paging': paging,
+            'ordering': ordering,
+            'info': info,
+            'searching': searching,
+            fixedHeader: {
+                header: fixedHeader,
+                footer: fixedHeader
+            },
+            responsive: true,
+            select: 'single',
+            "language": "ru" == "ru" ? language_opt : "",
+
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+
+            destroy: true
+        }
+
+        if (additionalOpt !== undefined) {
+            opt = Object.assign({}, opt, additionalOpt);
+        }
+
+        table.DataTable(opt);
+        window[div_id] = table;
+    }
+</script>

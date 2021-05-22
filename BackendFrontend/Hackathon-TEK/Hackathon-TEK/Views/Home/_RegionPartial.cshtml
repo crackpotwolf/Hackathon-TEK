@@ -1,6 +1,6 @@
 ﻿@model Hackathon_TEK.ModelsView.RegionInfo
 
-<div class="card-body" id="Region">
+<div class="card-body">
 
     <h4 class="text-center">@Html.DisplayFor(model => model.Name)</h4>
 
@@ -40,7 +40,32 @@
     <h4 class="text-center">Вероятность возникновения ЧС: @Html.DisplayFor(model => model.ProbabilityEmergency)</h4>
 
     <div class="text-center">
-        <button type="button" class="btn btn-outline-primary">Сообщить об ошибке</button>
+        <button type="submit" onClick="GetFeedback(this)" href="#" data-toggle="modal" data-target="#ModalPartial" 
+                class="btn btn-outline-primary">Обратная связь</button>
     </div>
 
 </div>
+
+<script>
+    // Обновление страницы
+    var refreshRoute = {
+        LoadAction: LoadList,
+        data: undefined
+    }
+
+    function GetFeedback(obj) {
+        $.ajax({
+            url: '@Url.Action("GetFeedback", "Home")',
+            type: "GET",
+            data: { },
+            success: function (result) {
+                ModalBody(result, refreshRoute);
+            },
+            error: function (error) {
+                console.log("ajax Create error", error);
+            },
+            complete: function () {
+            }
+        });
+    };
+</script>

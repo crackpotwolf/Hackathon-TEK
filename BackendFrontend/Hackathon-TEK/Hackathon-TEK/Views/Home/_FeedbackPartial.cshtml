@@ -1,0 +1,56 @@
+﻿
+<div class="modal-header">
+    <h5 id="modal-label" class="modal-title">Обратная связь</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div id="modal-body" class="modal-body">
+    <dl class="dl-horizontal">
+
+        <dt class="col-sm-10">
+
+        </dt>
+
+        <dd class="col-sm-10">
+
+        </dd>
+
+        <dt class="col-sm-10">
+            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+        </dt>
+
+        <dd class="col-sm-10">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </dd>
+
+    </dl>
+</div>
+<form data-ajax="true" data-ajax-mode="replace" data-ajax-update="#res"
+      data-ajax-method="POST" data-ajax-success="ActivateButton()">
+
+    <div class="modal-footer">
+        <button id="modal-apply-button" type="submit" onclick="BookSeats()" class="btn btn-primary">Отправить</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+    </div>
+</form>
+
+<script>
+        // Оформления брони
+    function BookSeats() {
+        var sumSeats = $('#Seats').val();
+
+        $.ajax({
+            url: '@Url.Action("BookSeats", "Order")',
+            type: 'GET',
+            traditional: true,
+            data: { eventId: eventId, sumSeats: sumSeats},
+            success: function (result) {
+            },
+            complete: function () {
+            }
+        });
+    }
+
+</script>
