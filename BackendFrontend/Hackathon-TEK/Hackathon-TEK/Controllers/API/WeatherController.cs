@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,6 +42,44 @@ namespace Hackathon_TEK.Controllers.API
             try
             {
                 return Ok(_repository.GetListQuery().ToList());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Ошибка: {ex.Message}");
+
+                return StatusCode(500, $"Не удалось ...");
+            }
+        }
+
+        [HttpGet("GetByDate")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Exception), 400)]
+        public IActionResult GetByDate(string regionMapId, string date)
+        {
+            try
+            {
+                var dateTime = DateTime.ParseExact(date,"dd.MM.yyyy", CultureInfo.InvariantCulture);
+                return Ok(_repository.GetListQuery().FirstOrDefault(p => p.Date == dateTime && p.Region.MapId == regionMapId));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Ошибка: {ex.Message}");
+
+                return StatusCode(500, $"Не удалось ...");
+            }
+        }
+
+        [HttpGet("GetByPeriod")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Exception), 400)]
+        public IActionResult GetByPeriod(string name, DateTime start, DateTime end)
+        {
+            try
+            {
+                var region = _regionRepository.GetListQuery().FirstOrDefault(p=>p.Name==name);
+                return Ok(_repository.GetListQuery().Where(p => p.Date >= start && p.Date<=end && p.RegionId==region.Id));
             }
             catch (Exception ex)
             {
