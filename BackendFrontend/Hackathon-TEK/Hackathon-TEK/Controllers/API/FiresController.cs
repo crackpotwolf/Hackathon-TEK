@@ -62,15 +62,15 @@ namespace Hackathon_TEK.Controllers.API
             {
                 var regions = _repository.GetList().Join(
                     data,
-                    p => new { p.Latitude, p.Longitude, p.AcqDate, p.AcqTime, p.RegionId },
-                    d => new { d.Latitude, d.Longitude, d.AcqDate, d.AcqTime, d.RegionId },
+                    p => new { p.Latitude, p.Longitude, p.Date, p.RegionId },
+                    d => new { d.Latitude, d.Longitude, d.Date, d.RegionId },
                     (p, d) =>
                     {
                         d.Id = p.Id;
                         return d;
                     })
                     .ToList();
-                _repository.AddRange(data.ExceptBy(regions, p => new { p.Latitude, p.Longitude, p.AcqDate, p.AcqTime, p.RegionId }));
+                _repository.AddRange(data.ExceptBy(regions, p => new { p.Latitude, p.Longitude, p.Date, p.RegionId }));
 
                 _repository.UpdateRange(regions);
                 return Ok();
