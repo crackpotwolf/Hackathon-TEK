@@ -104,11 +104,10 @@
         // Зададим цвета опасности.
         var dangerColors = {
             0: '#FFF8DC',
-            1: '#FFE4C4',
-            2: '#FFDEAD',
-            3: '#DEB887',
-            4: '#CD853F',
-            5: '#D2691E'
+            1: '#DEB887',
+            2: '#F4A460',
+            3: '#D2691E',
+            4: '#800000'
         };
 
         // Загрузим регионы.
@@ -127,7 +126,7 @@
                 var name = feature.properties.name;
 
                 var color = regions[iso];
-                if (color === undefined) color = 0;
+                if (color === undefined || color > 4) color = 0;
 
                 regionCollections[iso] = new ymaps.GeoObjectCollection(null,
                 {
@@ -185,10 +184,6 @@
                     if (highlightedRegion) {
                         highlightedRegion.options.set({ fillOpacity: 0.3 })
                     }
-
-                    var regions = ymaps.geoQuery(result);
-                    console.log(regions.search('properties.iso3166 = "RU-SA"'));
-                    regions.search('properties.iso3166 = "RU-SA"').setOptions('fillOpacity', '1');
 
                     // Выделим регион.
                     region.options.set({ fillOpacity: 1 });
