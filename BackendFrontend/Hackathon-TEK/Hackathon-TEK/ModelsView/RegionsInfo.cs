@@ -8,6 +8,11 @@ namespace Hackathon_TEK.ModelsView
     public class RegionsInfo
     {
         public string Name { get; set; }
+
         public string Probably { get; set; }
+
+        public string EventType { get; set; }
+
+        public string ObjectType { get; set; }
     }
 }

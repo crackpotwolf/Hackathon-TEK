@@ -19,6 +19,38 @@ namespace Hackathon_TEK.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("Hackathon_TEK.Models.Analyze", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("EventType")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ObjectType")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Probability")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Analyzes");
+                });
+
             modelBuilder.Entity("Hackathon_TEK.Models.Earthquake", b =>
                 {
                     b.Property<int>("Id")
@@ -287,6 +319,17 @@ namespace Hackathon_TEK.Migrations
                     b.HasIndex("RegionId");
 
                     b.ToTable("Weather");
+                });
+
+            modelBuilder.Entity("Hackathon_TEK.Models.Analyze", b =>
+                {
+                    b.HasOne("Hackathon_TEK.Models.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Hackathon_TEK.Models.Earthquake", b =>

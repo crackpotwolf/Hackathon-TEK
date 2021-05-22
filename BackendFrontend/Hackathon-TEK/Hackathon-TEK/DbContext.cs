@@ -17,6 +17,8 @@ namespace Hackathon_TEK
 
         public virtual DbSet<Weather> Weather { get; set; }
 
+        public virtual DbSet<Analyze> Analyzes { get; set; }
+
         public HackathonContext()
         { }
 
