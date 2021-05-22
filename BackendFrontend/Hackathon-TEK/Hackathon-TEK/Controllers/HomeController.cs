@@ -63,10 +63,10 @@ namespace Hackathon_TEK.Controllers
                 RegionInfo regionInfo = new RegionInfo()
                 {
                     Name = region_name,
-                    Temperature = weather.TempAverage>=0 ? $"+{weather.TempAverage.ToString()}" : $"-{weather.TempAverage.ToString()}",
-                    WindSpeed = weather.WindSpeedMax.ToString(),
+                    Temperature = weather.TempAverage >= 0 ? $"+{weather.TempAverage.ToString()}" : $"-{weather.TempAverage.ToString()}",
+                    WindSpeed = $"{weather.WindSpeedMax.ToString()} м/с",
                     Description = weather.CloudsMax.ToString(),
-                    Humidity = weather.HumidityMax.ToString(),
+                    Humidity = $"{weather.HumidityMax.ToString()} %",
                     Fires = "",
                     Earthquake = "",
                     ProbabilityEmergency = "",
