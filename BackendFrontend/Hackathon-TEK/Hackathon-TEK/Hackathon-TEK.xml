@@ -64,6 +64,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Hackathon_TEK.Extensions.DateTimeExtension">
+            <summary>
+            Если у функции, дата принимается в виде long, то она должна прийти в секундах, также необходимо передать offset (в секундах), 
+            даже если эта дата не имеет поправку на время (в этом случае в offset передавать просто 0).
+            в базе храниться время GMT+00:00. На клиенте нужно делать поправку на временную зону при необходимости.
+            Если дата приходит в string, смещение передавать не нужно.
+            </summary> 
+        </member>
         <member name="M:Hackathon_TEK.Extensions.FileExtensions.WriteToFile(System.IO.FileInfo,System.String)">
             <summary>
             Запись текста в файл

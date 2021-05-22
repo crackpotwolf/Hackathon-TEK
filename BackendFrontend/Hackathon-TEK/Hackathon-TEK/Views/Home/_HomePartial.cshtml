@@ -1,12 +1,167 @@
 ﻿<div class="row">
-    <div class="col-xl-12">
+    <div class="col-xl-8">
 
         <div class="card shadow mb-4">
             <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Карта</label></div>
+
             <div class="card-body">
-                <div id="map"></div>
+                <div class="row-fluid">
+                    <div id="YMapsID" class="maprow"></div>
+                </div>
             </div>
         </div>
 
     </div>
+
+    <div class="col-xl-4">
+        <div class="card shadow mb-4">
+            <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регион</label></div>
+
+            <div class="card-body">
+                <div id="sidebar" class="maprow">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        flatpickr('.calendars', {
+            dateFormat: "d.m.Y",
+            "locale": "ru"
+        });
+
+        ymaps.ready(init);
+    });
+
+    function init()
+    {
+        $("#YMapsID").empty();
+
+        var date = document.getElementById("date").value;
+
+        $.ajax({
+            url: '@Url.Action("GetRegions", "Home")',
+            type: 'GET',
+            async:false,
+            data: { date: date},
+            success: function (result) {
+                initMap(result);
+            },
+            complete: function () {
+            }
+        });
+    }
+
+    function initMap(regions)
+    {
+        var map = new ymaps.Map('YMapsID', 
+        {
+            center: [65, 100],
+            zoom: 3,
+            type: 'yandex#map',
+            controls: ['zoomControl']
+        });
+
+        map.controls.get('zoomControl').options.set({ size: 'small' });
+
+        // Зададим цвета опасности.
+        var dangerColors = {
+            0: '#FFF8DC',
+            1: '#FFE4C4',
+            2: '#FFDEAD',
+            3: '#DEB887',
+            4: '#CD853F',
+            5: '#D2691E',
+            6: '#800000'
+        };
+  
+        // Загрузим регионы.
+        ymaps.borders.load('RU', 
+        {
+            lang: 'ru',
+            quality: 2
+        }).then(function (result)
+        {
+            // Создадим объект, в котором будут храниться коллекции с нашими регионами.
+            var regionCollections = {};
+
+            result.features.forEach(function (feature) 
+            {
+                var iso = feature.properties.iso3166;
+                var name = feature.properties.name;
+
+                var color = regions[iso];
+
+                regionCollections[iso] = new ymaps.GeoObjectCollection(null, 
+                {
+                    fillColor: dangerColors[color],
+                    strokeColor: dangerColors[color],
+                    strokeOpacity: 0.3,
+                    fillOpacity: 0.3,
+                    hintCloseTimeout: 0,
+                    hintOpenTimeout: 0
+                });
+                
+                // Создадим свойство в коллекции.
+                regionCollections[iso].properties.region = "";
+                regionCollections[iso].properties.iso = "";
+
+                // Добавим регион в соответствующую коллекцию.
+                regionCollections[iso].add(new ymaps.GeoObject(feature));
+                // Добавим имя региона в массив.
+                regionCollections[iso].properties.region = name;
+                // Добавим идентификатор региона в массив.
+                regionCollections[iso].properties.iso = iso;
+            });
+
+            // Создадим переменную, в которую будем сохранять выделенный в данный момент регион.
+            var highlightedRegion;
+
+            for (var regionName in regionCollections) 
+            {
+                // Добавим коллекцию на карту.
+                map.geoObjects.add(regionCollections[regionName]);
+
+                // При наведении курсора мыши будем выделять регион.
+                regionCollections[regionName].events.add('mouseenter', function (event) 
+                {
+                    var region = event.get('target').getParent();
+                    region.options.set({ fillOpacity: 1 });
+                });
+                
+                // При выводе курсора за пределы объекта вернем опции по умолчанию.
+                regionCollections[regionName].events.add('mouseleave', function (event) 
+                {
+                    var region = event.get('target').getParent();
+                    if (region !== highlightedRegion) {
+                        region.options.set({ fillOpacity: 0.3 });
+                    }
+                });
+
+                // Подпишемся на событие клика.
+                regionCollections[regionName].events.add('click', function (event) 
+                {
+                    var target = event.get('target');
+                    var region = target.getParent();
+
+                    console.log(region.properties.iso);
+
+                    // Если на карте выделен регион, то мы снимаем с него выделение.
+                    if (highlightedRegion) {
+                        highlightedRegion.options.set({ fillOpacity: 0.3 })
+                    }
+                    
+                    // Выделим регион.
+                    region.options.set({ fillOpacity: 1 });
+
+                    // Сохраним ссылку на выделенный регион.
+                    highlightedRegion = region;
+                });
+            }
+        })
+    }
+</script>
