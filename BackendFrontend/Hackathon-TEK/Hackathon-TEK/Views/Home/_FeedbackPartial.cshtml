@@ -1,56 +1,75 @@
-﻿
-<div class="modal-header">
+﻿<div class="modal-header">
     <h5 id="modal-label" class="modal-title">Обратная связь</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 
-<div id="modal-body" class="modal-body">
-    <dl class="dl-horizontal">
+<form asp-action="" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#res" data-ajax-method="POST"
+      data-ajax-success="ActivateButton()">
 
-        <dt class="col-sm-10">
+    <div id="modal-body" class="modal-body">
+        <div class="form-horizontal form-label-left">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        </dt>
+            <div class="item form-group">
+                <label class="control-label col-12">Причина</label>
+                <div class="input-group col-12">
+                    <select id="eventTypes" class="form-select form-control" required>
+                        @foreach (var eventTypes in @ViewBag.eventTypes)
+                        {
+                            <option>@eventTypes</option>
+                        }
+                    </select>
+                </div>
+            </div>
 
-        <dd class="col-sm-10">
+            <div class="item form-group">
+                <label class="control-label col-12">Тип объекта</label>
+                <div class="input-group col-12">
+                    <select id="objectTypes" class="form-select form-control" required>
+                        @foreach (var objectTypes in @ViewBag.objectTypes)
+                        {
+                            <option>@objectTypes</option>
+                        }
+                    </select>
+                </div>
+            </div>
 
-        </dd>
+            <div class="form-group">
+                <label class="control-label col-12">Подробности</label>
+                <div class="input-group col-12">
+                    <textarea class="form-control" id="details" rows="3"></textarea>
+                </div>
+            </div>
 
-        <dt class="col-sm-10">
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-        </dt>
-
-        <dd class="col-sm-10">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </dd>
-
-    </dl>
-</div>
-<form data-ajax="true" data-ajax-mode="replace" data-ajax-update="#res"
-      data-ajax-method="POST" data-ajax-success="ActivateButton()">
+        </div>
+    </div>
 
     <div class="modal-footer">
-        <button id="modal-apply-button" type="submit" onclick="BookSeats()" class="btn btn-primary">Отправить</button>
+        <button id="modal-apply-button" onclick="PostFeedback()" class="btn btn-primary">Отправить</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
     </div>
 </form>
 
 <script>
-        // Оформления брони
-    function BookSeats() {
-        var sumSeats = $('#Seats').val();
+    function PostFeedback() 
+    {
+        var objectTypes = $('#objectTypes').val();
+        var eventTypes = $('#eventTypes').val();
+        var details = $('#details').val();
+        var date = $('#date').val();
+        var region = document.getElementById('RegionName').getAttribute('value');
 
         $.ajax({
-            url: '@Url.Action("BookSeats", "Order")',
+            url: '@Url.Action("PostFeedback", "Home")',
             type: 'GET',
             traditional: true,
-            data: { eventId: eventId, sumSeats: sumSeats},
+            data: { region: region, details: details, objectTypes: objectTypes, eventTypes: eventTypes, date: date},
             success: function (result) {
             },
             complete: function () {
             }
         });
     }
-
 </script>

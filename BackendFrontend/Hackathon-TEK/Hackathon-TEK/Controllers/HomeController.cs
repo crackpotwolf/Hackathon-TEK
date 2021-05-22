@@ -88,6 +88,7 @@ namespace Hackathon_TEK.Controllers
 
                 RegionInfo regionInfo = new RegionInfo()
                 {
+                    Region = region,
                     Name = region_name,
                     Temperature = weather!=null ? weather.TempAverage >= 0 ? $"+{weather.TempAverage}" : $"{weather.TempAverage}" : "-",
                     WindSpeed = weather != null ? $"{weather.WindSpeedMax} м/с" : "-",
@@ -126,11 +127,20 @@ namespace Hackathon_TEK.Controllers
 
         public virtual IActionResult GetFeedback() 
         {
-            ///список типов событий
+            // Cписок типов событий
             var eventTypes = _reasonsRepository.GetListQuery().Select(p => p.EventType).Distinct().ToList();
-            //список типов объектов
+            ViewBag.eventTypes = eventTypes;
+
+            // Cписок типов объектов
             var objectTypes = _reasonsRepository.GetListQuery().Select(p => p.TypeObject).Distinct().ToList();
-            return PartialView("_FeedbackPartial", new { eventTypes=eventTypes, objectTypes=objectTypes});
+            ViewBag.objectTypes = objectTypes;
+
+            return PartialView("_FeedbackPartial");
+        }
+
+        public virtual void PostFeedback(string date, string eventTypes, string objectTypes, string details, string region) 
+        {
+            var test = date;
         }
     }
 }

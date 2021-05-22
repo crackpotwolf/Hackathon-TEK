@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace Hackathon_TEK.ModelsView
 {
     public class RegionInfo
-    { 
+    {
+        public string Region { get; set; }
         public string Name { get; set; } 
         public string Temperature { get; set; }
         public string WindSpeed { get; set; }
