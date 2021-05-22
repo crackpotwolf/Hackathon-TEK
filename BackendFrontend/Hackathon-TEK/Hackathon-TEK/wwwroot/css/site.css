@@ -14,6 +14,34 @@
     padding-top: 20px;
 }
 
-.maps {
+.maprow {
     padding: 0 !important;
+    height: 500px;
+}
+
+.maprows {
+    padding: 0 !important;
+    height: 600px;
+}
+
+.regions {
+    max-height: 500px;
+    overflow: auto;
+}
+
+.calendars {
+    border: 2px solid whitesmoke;
+    border-radius: 20px;
+    padding: 12px 10px;
+    text-align: center;
+    width: 250px;
+}
+
+.dates {
+    font-size: 20px;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    color: #465457;
+    margin: 10px;
 }

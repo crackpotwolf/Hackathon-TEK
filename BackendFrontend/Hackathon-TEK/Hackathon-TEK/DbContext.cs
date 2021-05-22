@@ -15,6 +15,8 @@ namespace Hackathon_TEK
 
         public virtual DbSet<Earthquake> Earthquakes { get; set; }
 
+        public virtual DbSet<Weather> Weather { get; set; }
+
         public HackathonContext()
         { }
 

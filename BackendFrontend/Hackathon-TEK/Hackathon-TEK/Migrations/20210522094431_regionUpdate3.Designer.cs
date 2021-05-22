@@ -3,15 +3,17 @@ using System;
 using Hackathon_TEK;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hackathon_TEK.Migrations
 {
     [DbContext(typeof(HackathonContext))]
-    partial class HackathonContextModelSnapshot : ModelSnapshot
+    [Migration("20210522094431_regionUpdate3")]
+    partial class regionUpdate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,17 +77,20 @@ namespace Hackathon_TEK.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<double>("BrightT31")
-                        .HasColumnType("double precision");
+                    b.Property<DateTime>("AcqDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("AcqTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Bright_t31")
+                        .HasColumnType("text");
 
                     b.Property<double>("Brightness")
                         .HasColumnType("double precision");
 
                     b.Property<int>("Confidence")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("District")
                         .HasColumnType("text");
@@ -165,9 +170,6 @@ namespace Hackathon_TEK.Migrations
 
                     b.Property<int>("RegionId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("TypeObject")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

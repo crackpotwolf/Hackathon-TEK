@@ -3,15 +3,17 @@ using System;
 using Hackathon_TEK;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hackathon_TEK.Migrations
 {
     [DbContext(typeof(HackathonContext))]
-    partial class HackathonContextModelSnapshot : ModelSnapshot
+    [Migration("20210522105759_weatherDelete")]
+    partial class weatherDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,17 +77,20 @@ namespace Hackathon_TEK.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<double>("BrightT31")
-                        .HasColumnType("double precision");
+                    b.Property<DateTime>("AcqDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("AcqTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Bright_t31")
+                        .HasColumnType("text");
 
                     b.Property<double>("Brightness")
                         .HasColumnType("double precision");
 
                     b.Property<int>("Confidence")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("District")
                         .HasColumnType("text");
@@ -218,77 +223,6 @@ namespace Hackathon_TEK.Migrations
                     b.ToTable("Tests");
                 });
 
-            modelBuilder.Entity("Hackathon_TEK.Models.Weather", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<double?>("CloudsMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<double?>("HumidityMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("boolean");
-
-                    b.Property<double?>("Percipitation")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("PressureMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StationId")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("StationLat")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("StationLon")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("StationName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("StationRegion")
-                        .HasColumnType("text");
-
-                    b.Property<double?>("TempAverage")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("TempAverage0")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("TempDifNorm0")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("TempMax0")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("TempMin0")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("WindDegMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("WindSpeedMax")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Weather");
-                });
-
             modelBuilder.Entity("Hackathon_TEK.Models.Earthquake", b =>
                 {
                     b.HasOne("Hackathon_TEK.Models.Reason", "Reason")
@@ -324,17 +258,6 @@ namespace Hackathon_TEK.Migrations
                 });
 
             modelBuilder.Entity("Hackathon_TEK.Models.Reason", b =>
-                {
-                    b.HasOne("Hackathon_TEK.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Region");
-                });
-
-            modelBuilder.Entity("Hackathon_TEK.Models.Weather", b =>
                 {
                     b.HasOne("Hackathon_TEK.Models.Region", "Region")
                         .WithMany()

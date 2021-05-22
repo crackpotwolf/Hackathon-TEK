@@ -37,7 +37,7 @@ namespace Hackathon_TEK.Controllers.API
         {
             try
             {
-                return Ok(_regionRepository.GetList());
+                return Ok(_regionRepository.GetList().Select(p=>new { p.Name, p.Id, p.RssUrl, coordinates=JsonConvert.DeserializeObject<Dictionary<string, List<List<double>>>>(p.Coordinates)}));
             }
             catch (Exception ex)
             {
