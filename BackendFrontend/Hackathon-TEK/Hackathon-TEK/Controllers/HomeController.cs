@@ -140,7 +140,23 @@ namespace Hackathon_TEK.Controllers
 
         public virtual void PostFeedback(string date, string eventTypes, string objectTypes, string details, string region) 
         {
-            var test = date;
+            try
+            {
+                var reason = new Reason();
+                reason.Date = DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                reason.TypeObject = objectTypes;
+                reason.EventType = eventTypes;
+                reason.ReasonDescription = details;
+
+                var regionObj = _regionsRepos.GetListQuery().First(p => p.MapId == region);
+
+                reason.RegionId = regionObj.Id;
+                _reasonsRepository.Add(reason);
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }
