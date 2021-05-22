@@ -18,9 +18,54 @@
             <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регион</label></div>
 
             <div class="card-body">
-                <div id="sidebar" class="maprow">
+
+                <h4 class="text-center">Волгоградская область</h4>
+
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Температура</td>
+                            <td>+ 30</td>
+                        </tr>
+                        <tr>
+                            <td>Скорость ветра</td>
+                            <td>20 м/с</td>
+                        </tr>
+                        <tr>
+                            <td>Описание</td>
+                            <td>Ясно</td>
+                        </tr>
+                        <tr>
+                            <td>Влажность</td>
+                            <td>44 %</td>
+                        </tr>
+                        <tr>
+                            <td>Вероятность пожаров</td>
+                            <td>50 %</td>
+                        </tr>
+                        <tr>
+                            <td>Вероятность землетресений</td>
+                            <td> 5 %</td>
+                        </tr>
+                        <tr>
+                            <td>Повреждение</td>
+                            <td>ЛЕП, ПС</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="text-center">Вероятность возникновения ЧС: 25 %</h4>
+
+                <div class="progress" style="margin-top: 10px; margin-bottom:10px">
+                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                 </div>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary">Сообщить об ошибке</button>
+                </div>
+
             </div>
+
         </div>
     </div>
 
@@ -58,7 +103,7 @@
 
     function initMap(regions)
     {
-        var map = new ymaps.Map('YMapsID', 
+        var map = new ymaps.Map('YMapsID',
         {
             center: [65, 100],
             zoom: 3,
@@ -78,9 +123,9 @@
             5: '#D2691E',
             6: '#800000'
         };
-  
+
         // Загрузим регионы.
-        ymaps.borders.load('RU', 
+        ymaps.borders.load('RU',
         {
             lang: 'ru',
             quality: 2
@@ -89,14 +134,14 @@
             // Создадим объект, в котором будут храниться коллекции с нашими регионами.
             var regionCollections = {};
 
-            result.features.forEach(function (feature) 
+            result.features.forEach(function (feature)
             {
                 var iso = feature.properties.iso3166;
                 var name = feature.properties.name;
 
                 var color = regions[iso];
 
-                regionCollections[iso] = new ymaps.GeoObjectCollection(null, 
+                regionCollections[iso] = new ymaps.GeoObjectCollection(null,
                 {
                     fillColor: dangerColors[color],
                     strokeColor: dangerColors[color],
@@ -105,7 +150,7 @@
                     hintCloseTimeout: 0,
                     hintOpenTimeout: 0
                 });
-                
+
                 // Создадим свойство в коллекции.
                 regionCollections[iso].properties.region = "";
                 regionCollections[iso].properties.iso = "";
@@ -121,20 +166,20 @@
             // Создадим переменную, в которую будем сохранять выделенный в данный момент регион.
             var highlightedRegion;
 
-            for (var regionName in regionCollections) 
+            for (var regionName in regionCollections)
             {
                 // Добавим коллекцию на карту.
                 map.geoObjects.add(regionCollections[regionName]);
 
                 // При наведении курсора мыши будем выделять регион.
-                regionCollections[regionName].events.add('mouseenter', function (event) 
+                regionCollections[regionName].events.add('mouseenter', function (event)
                 {
                     var region = event.get('target').getParent();
                     region.options.set({ fillOpacity: 1 });
                 });
-                
+
                 // При выводе курсора за пределы объекта вернем опции по умолчанию.
-                regionCollections[regionName].events.add('mouseleave', function (event) 
+                regionCollections[regionName].events.add('mouseleave', function (event)
                 {
                     var region = event.get('target').getParent();
                     if (region !== highlightedRegion) {
@@ -143,7 +188,7 @@
                 });
 
                 // Подпишемся на событие клика.
-                regionCollections[regionName].events.add('click', function (event) 
+                regionCollections[regionName].events.add('click', function (event)
                 {
                     var target = event.get('target');
                     var region = target.getParent();
@@ -154,7 +199,7 @@
                     if (highlightedRegion) {
                         highlightedRegion.options.set({ fillOpacity: 0.3 })
                     }
-                    
+
                     // Выделим регион.
                     region.options.set({ fillOpacity: 1 });
 
