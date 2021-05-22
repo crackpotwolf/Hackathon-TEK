@@ -52,6 +52,43 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Get">
+            <summary>
+            Получение списка погоды
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Post(System.Collections.Generic.Dictionary{System.String,Hackathon_TEK.Models.WeatherDataVM})">
+            <summary>
+            Запись списка данных о погоде
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Extensions.FileExtensions.WriteToFile(System.IO.FileInfo,System.String)">
+            <summary>
+            Запись текста в файл
+            </summary>
+            <param name="file">Файл</param>
+            <param name="text">Текст</param>
+            <returns></returns>
+        </member>
+        <member name="M:Hackathon_TEK.Extensions.FileExtensions.ParseCSV(System.IO.FileInfo,System.String)">
+            <summary>
+            Парсинг CSV файла
+            </summary>
+        </member>
+        <member name="M:Hackathon_TEK.Extensions.FileExtensions.ReadAllFile(System.IO.FileInfo,System.String@)">
+            <summary>
+            Получить весь текст из файла
+            </summary>
+            <param name="file">Файл</param>
+            <param name="text">Переменная, куда сохранить текст из файла</param>
+            <returns>
+            Код ошибки
+             0 - Успешно
+            -1 - Файл не существует
+            </returns>
+        </member>
         <member name="T:Hackathon_TEK.Interfaces.IEntity">
             <summary>
             Базовый интерфейс
@@ -102,6 +139,11 @@
             Тип события
             </summary>
         </member>
+        <member name="P:Hackathon_TEK.Models.Reason.TypeObject">
+            <summary>
+            Тип объекта
+            </summary>
+        </member>
         <member name="P:Hackathon_TEK.Models.Reason.Description">
             <summary>
             Описание
@@ -110,6 +152,11 @@
         <member name="P:Hackathon_TEK.Models.Reason.ReasonDescription">
             <summary>
             Причина
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Reason.IsWeather">
+            <summary>
+            Причина относится к погодным данным
             </summary>
         </member>
         <member name="T:Hackathon_TEK.Models.Region">
@@ -130,6 +177,11 @@
         <member name="P:Hackathon_TEK.Models.Region.RssUrl">
             <summary>
             Ссылка на RSS лонту оперативной сводки МЧС региона
+            </summary>
+        </member>
+        <member name="P:Hackathon_TEK.Models.Region.MapId">
+            <summary>
+            Идентификатор региона на карте 
             </summary>
         </member>
         <member name="T:Hackathon_TEK.Models.RegionConnectedObject">

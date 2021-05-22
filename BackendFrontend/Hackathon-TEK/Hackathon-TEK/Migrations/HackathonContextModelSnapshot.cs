@@ -160,11 +160,17 @@ namespace Hackathon_TEK.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsWeather")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("ReasonDescription")
                         .HasColumnType("text");
 
                     b.Property<int>("RegionId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TypeObject")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -185,6 +191,9 @@ namespace Hackathon_TEK.Migrations
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("MapId")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -210,6 +219,77 @@ namespace Hackathon_TEK.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tests");
+                });
+
+            modelBuilder.Entity("Hackathon_TEK.Models.Weather", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double?>("CloudsMax")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double?>("HumidityMax")
+                        .HasColumnType("double precision");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("boolean");
+
+                    b.Property<double?>("Percipitation")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("PressureMax")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StationId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("StationLat")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("StationLon")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("StationName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("StationRegion")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("TempAverage")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TempAverage0")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TempDifNorm0")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TempMax0")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TempMin0")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("WindDegMax")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("WindSpeedMax")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Weather");
                 });
 
             modelBuilder.Entity("Hackathon_TEK.Models.Earthquake", b =>
@@ -247,6 +327,17 @@ namespace Hackathon_TEK.Migrations
                 });
 
             modelBuilder.Entity("Hackathon_TEK.Models.Reason", b =>
+                {
+                    b.HasOne("Hackathon_TEK.Models.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("Hackathon_TEK.Models.Weather", b =>
                 {
                     b.HasOne("Hackathon_TEK.Models.Region", "Region")
                         .WithMany()

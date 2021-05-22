@@ -24,5 +24,10 @@ namespace Hackathon_TEK.Models
         /// Ссылка на RSS лонту оперативной сводки МЧС региона
         /// </summary>
         public string RssUrl { get; set; }
+
+        /// <summary>
+        /// Идентификатор региона на карте 
+        /// </summary>
+        public string MapId { get; set; }
     }
 }
