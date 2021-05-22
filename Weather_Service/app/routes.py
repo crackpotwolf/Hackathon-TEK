@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from os import stat
 from flask import Blueprint, request, jsonify
 
 from app import app
@@ -59,7 +57,7 @@ def collect_all_weather_data():
 
 
 @api.route('/collect_forecast_for_station', methods=['DELETE', 'GET', 'POST', 'PUT'])
-def collect_all_weather_data():
+def collect_forecast_for_station():
     """"""
     if request.method == "POST":
       
