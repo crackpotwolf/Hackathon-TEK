@@ -8,6 +8,8 @@ namespace Hackathon_TEK.Models
 {
     public class Weather : RegionConnectedObject
     {
+        public int StationId { get; set; }
+
         public string StationName { get; set; }
 
         public string StationRegion { get; set; }
