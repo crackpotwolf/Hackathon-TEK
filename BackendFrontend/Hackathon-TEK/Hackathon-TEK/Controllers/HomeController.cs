@@ -94,5 +94,10 @@ namespace Hackathon_TEK.Controllers
                 return BadRequest();
             }
         }
+
+        public virtual IActionResult GetFeedback() 
+        {
+            return PartialView("_FeedbackPartial");
+        }
     }
 }
