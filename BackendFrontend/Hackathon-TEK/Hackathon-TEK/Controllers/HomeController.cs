@@ -17,11 +17,12 @@ namespace Hackathon_TEK.Controllers
         private readonly ILogger<IndexModel> _logger;
         private readonly IRepository<Fire> _fireRepository;
         private readonly IRepository<Earthquake> _earthRepository;
-
+        private readonly IRepository<Reason> _reasonsRepository;
         public HomeController(IRepository<Region> regionsRepos,
             IRepository<Weather> weatherRepository,
             IRepository<Fire> fireRepository,
             IRepository<Earthquake> earthRepository,
+            IRepository<Reason> reasonsRepository,
             ILogger<IndexModel> logger)
         {
             this._regionsRepos = regionsRepos;
@@ -29,6 +30,7 @@ namespace Hackathon_TEK.Controllers
             _weatherRepository = weatherRepository;
             _fireRepository = fireRepository;
             _earthRepository = earthRepository;
+            _reasonsRepository = reasonsRepository;
         }
 
         public IActionResult Index()
@@ -124,7 +126,11 @@ namespace Hackathon_TEK.Controllers
 
         public virtual IActionResult GetFeedback() 
         {
-            return PartialView("_FeedbackPartial");
+            ///список типов событий
+            var eventTypes = _reasonsRepository.GetListQuery().Select(p => p.EventType).Distinct().ToList();
+            //список типов объектов
+            var objectTypes = _reasonsRepository.GetListQuery().Select(p => p.TypeObject).Distinct().ToList();
+            return PartialView("_FeedbackPartial", new { eventTypes=eventTypes, objectTypes=objectTypes});
         }
     }
 }
