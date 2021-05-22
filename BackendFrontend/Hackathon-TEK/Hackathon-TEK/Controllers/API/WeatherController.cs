@@ -20,13 +20,91 @@ namespace Hackathon_TEK.Controllers.API
     {
         protected readonly IRepository<Weather> _repository;
         protected readonly IRepository<Region> _regionRepository;
+        protected readonly IRepository<Reason> _reasonRepository;
         private readonly ILogger<IndexModel> _logger;
 
-        public WeatherController(ILogger<IndexModel> logger, IRepository<Weather> repository, IRepository<Region> regionRepository)
+        public WeatherController(ILogger<IndexModel> logger, IRepository<Weather> repository, 
+            IRepository<Region> regionRepository, IRepository<Reason> reasonRepository)
         {
             _logger = logger;
             _repository = repository;
             _regionRepository = regionRepository;
+            _reasonRepository = reasonRepository;
+        }
+
+        /// <summary>
+        /// Получение списка погоды
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetWithReason")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Exception), 400)]
+        public IActionResult GetWithReason()
+        {
+            try
+            {
+                var res = _repository.GetList().Join(
+                    _reasonRepository.GetList(),
+                    w=>new { w.Date.Date, w.RegionId},
+                    r=>new { r.Date.Date, r.RegionId},
+                    (w,r)=> {
+                        return new
+                        {
+                            Id=w.Id,
+                            StationId = w.StationId,
+                            StationName = w.StationName,
+                            StationRegion = w.StationRegion,
+                            StationLat = w.StationLat,
+                            StationLon = w.StationLon,
+                            Date = w.Date,
+                            TempMin0 = w.TempMin0,
+                            TempAverage0 = w.TempAverage0,
+                            TempMax0 = w.TempMax0,
+                            TempDifNorm0 = w.TempDifNorm0,
+                            Percipitation = w.Percipitation,
+                            TempAverage = w.TempAverage,
+                            PressureMax = w.PressureMax,
+                            HumidityMax = w.HumidityMax,
+                            WindSpeedMax = w.WindSpeedMax,
+                            WindDegMax = w.WindDegMax,
+                            CloudsMax = w.CloudsMax,
+                            RegionId = w.RegionId,
+                            ReasonId=(int?)r.Id
+                        };
+                    }).ToList();
+                var resIds = res.Select(p => p.Id).ToList();
+                var excepted = _repository.GetListQuery().Where(p => !resIds.Any(t => t == p.Id))
+                    .Select(w=> new
+                    {
+                        Id = w.Id,
+                        StationId = w.StationId,
+                        StationName = w.StationName,
+                        StationRegion = w.StationRegion,
+                        StationLat = w.StationLat,
+                        StationLon = w.StationLon,
+                        Date = w.Date,
+                        TempMin0 = w.TempMin0,
+                        TempAverage0 = w.TempAverage0,
+                        TempMax0 = w.TempMax0,
+                        TempDifNorm0 = w.TempDifNorm0,
+                        Percipitation = w.Percipitation,
+                        TempAverage = w.TempAverage,
+                        PressureMax = w.PressureMax,
+                        HumidityMax = w.HumidityMax,
+                        WindSpeedMax = w.WindSpeedMax,
+                        WindDegMax = w.WindDegMax,
+                        CloudsMax = w.CloudsMax,
+                        RegionId = w.RegionId,
+                        ReasonId = (int?)null
+                    });
+                res.AddRange(excepted);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
