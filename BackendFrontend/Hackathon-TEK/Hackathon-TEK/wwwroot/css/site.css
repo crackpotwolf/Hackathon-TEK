@@ -14,13 +14,19 @@
     padding-top: 20px;
 }
 
-.ymap {
-    padding: 0 !important;
-}
-
 .maprow {
     padding: 0 !important;
+    height: 500px;
+}
+
+.maprows {
+    padding: 0 !important;
     height: 600px;
+}
+
+.regions {
+    max-height: 500px;
+    overflow: auto;
 }
 
 .calendars {

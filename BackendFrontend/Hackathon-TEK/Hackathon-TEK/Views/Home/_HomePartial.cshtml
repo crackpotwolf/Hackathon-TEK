@@ -1,7 +1,7 @@
 ﻿<div class="row">
     <div class="col-xl-8">
 
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 maprows">
             <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Карта</label></div>
 
             <div class="card-body">
@@ -14,11 +14,30 @@
     </div>
 
     <div class="col-xl-4">
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 maprows">
             <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регион</label></div>
 
-            <div class="card-body" id="Region">
+            <div class="card-body align-middle" id="Region">
                 <h4 class="text-center">Выберете регион ...</h4>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-xl-4">
+        <div class="card shadow mb-4 maprows">
+            <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регионы</label></div>
+
+            <div class="card-body" id="Region">
+
+                <div class="card-body regions" id="Region">
+
+                    
+                </div>
             </div>
 
         </div>
@@ -183,4 +202,6 @@
             $("#Region").html(region);
         }
     }
+
+
 </script>

@@ -8,11 +8,11 @@
         <tbody>
             <tr>
                 <td>Температура</td>
-                <td>+ @Html.DisplayFor(model => model.Temperature)</td>
+                <td>@Html.DisplayFor(model => model.Temperature)</td>
             </tr>
             <tr>
                 <td>Скорость ветра</td>
-                <td>@Html.DisplayFor(model => model.WindSpeed) м/с</td>
+                <td>@Html.DisplayFor(model => model.WindSpeed)</td>
             </tr>
             <tr>
                 <td>Описание</td>
@@ -20,24 +20,24 @@
             </tr>
             <tr>
                 <td>Влажность</td>
-                <td>@Html.DisplayFor(model => model.Humidity) %</td>
+                <td>@Html.DisplayFor(model => model.Humidity)</td>
             </tr>
             <tr>
                 <td>Вероятность пожаров</td>
-                <td>@Html.DisplayFor(model => model.Fires) %</td>
+                <td>@Html.DisplayFor(model => model.Fires)</td>
             </tr>
             <tr>
                 <td>Вероятность землетресений</td>
-                <td>@Html.DisplayFor(model => model.Earthquake) %</td>
+                <td>@Html.DisplayFor(model => model.Earthquake)</td>
             </tr>
             <tr>
                 <td>Повреждение</td>
-                <td>ЛЕП, ПС</td>
+                <td>@Html.DisplayFor(model => model.Damage)</td>
             </tr>
         </tbody>
     </table>
 
-    <h4 class="text-center">Вероятность возникновения ЧС: @Html.DisplayFor(model => model.ProbabilityEmergency) %</h4>
+    <h4 class="text-center">Вероятность возникновения ЧС: @Html.DisplayFor(model => model.ProbabilityEmergency)</h4>
 
     <div class="text-center">
         <button type="button" class="btn btn-outline-primary">Сообщить об ошибке</button>
