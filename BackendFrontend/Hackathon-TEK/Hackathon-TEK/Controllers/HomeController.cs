@@ -15,12 +15,20 @@ namespace Hackathon_TEK.Controllers
         private readonly IRepository<Region> _regionsRepos;
         private readonly IRepository<Weather> _weatherRepository;
         private readonly ILogger<IndexModel> _logger;
+        private readonly IRepository<Fire> _fireRepository;
+        private readonly IRepository<Earthquake> _earthRepository;
 
-        public HomeController(IRepository<Region> regionsRepos, IRepository<Weather> weatherRepository, ILogger<IndexModel> logger)
+        public HomeController(IRepository<Region> regionsRepos,
+            IRepository<Weather> weatherRepository,
+            IRepository<Fire> fireRepository,
+            IRepository<Earthquake> earthRepository,
+            ILogger<IndexModel> logger)
         {
             this._regionsRepos = regionsRepos;
             _logger = logger;
             _weatherRepository = weatherRepository;
+            _fireRepository = fireRepository;
+            _earthRepository = earthRepository;
         }
 
         public IActionResult Index()
@@ -52,20 +60,39 @@ namespace Hackathon_TEK.Controllers
             try
             {
                 var regionObj = _regionsRepos.GetListQuery().First(p => p.MapId == region);
+                var dateTime = DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                Weather weather = null;
 
-                var weather = _weatherRepository.GetListQuery()
-                    .First(p => p.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                if(_weatherRepository.GetListQuery().Any(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id))
+                weather = _weatherRepository.GetListQuery()
+                    .First(p => p.Date.Date == dateTime
                         && p.RegionId==regionObj.Id);
+
+                Fire fire = null;
+
+                if(_fireRepository.GetListQuery()
+                    .Any(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id))
+                        fire = _fireRepository.GetListQuery()
+                            .Where(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id)
+                            .OrderByDescending(p=>p.Confidence).First();
+
+                Earthquake earth = null;
+
+                if (_earthRepository.GetListQuery()
+                    .Any(p => p.Update.Date == dateTime && p.RegionId == regionObj.Id))
+                    earth = _earthRepository.GetListQuery()
+                        .Where(p => p.Update.Date == dateTime && p.RegionId == regionObj.Id)
+                        .OrderByDescending(p => p.Magnitude).First();
 
                 RegionInfo regionInfo = new RegionInfo()
                 {
                     Name = region_name,
-                    Temperature = weather.TempAverage >= 0 ? $"+{weather.TempAverage}" : $"{weather.TempAverage}",
-                    WindSpeed = $"{weather.WindSpeedMax} м/с",
-                    Description = weather.CloudsMax.ToString(),
-                    Humidity = $"{weather.HumidityMax} %",
-                    Fires = "",
-                    Earthquake = "",
+                    Temperature = weather!=null ? weather.TempAverage >= 0 ? $"+{weather.TempAverage}" : $"{weather.TempAverage}" : "-",
+                    WindSpeed = weather != null ? $"{weather.WindSpeedMax} м/с" : "-",
+                    Description = weather != null ? weather.CloudsMax.ToString() : "-",
+                    Humidity = weather != null ? $"{weather.HumidityMax} %" : "-",
+                    Fires = fire!=null ? $"{fire.Confidence} %" : "-",
+                    Earthquake = earth!=null ? earth.Magnitude.ToString() : "-",
                     ProbabilityEmergency = "",
                 };
 
