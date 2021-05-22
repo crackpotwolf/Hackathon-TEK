@@ -11,10 +11,12 @@ namespace Hackathon_TEK.Controllers
     public class HomeController : Controller
     {
         private readonly IRepository<Region> _regionsRepos;
+        private readonly IRepository<Weather> _weatherRepository;
 
-        public HomeController(IRepository<Region> regionsRepos)
+        public HomeController(IRepository<Region> regionsRepos, IRepository<Weather> weatherRepository)
         {
             this._regionsRepos = regionsRepos;
+            _weatherRepository = weatherRepository;
         }
 
         public IActionResult Index()
@@ -52,23 +54,29 @@ namespace Hackathon_TEK.Controllers
         {
             try
             {
+                var regionObj = _regionsRepos.GetListQuery().First(p => p.MapId == region);
+
+                var weather = _weatherRepository.GetListQuery()
+                    .First(p => p.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                        && p.RegionId==regionObj.Id);
+
                 RegionInfo regionInfo = new RegionInfo()
                 {
                     Name = region_name,
-                    Temperature = "",
-                    WindSpeed = "",
-                    Description = "",
-                    Humidity = "",
+                    Temperature = weather.TempAverage>=0 ? $"+{weather.TempAverage.ToString()}" : $"-{weather.TempAverage.ToString()}",
+                    WindSpeed = weather.WindSpeedMax.ToString(),
+                    Description = weather.CloudsMax.ToString(),
+                    Humidity = weather.HumidityMax.ToString(),
                     Fires = "",
                     Earthquake = "",
-                    ProbabilityEmergency = "46",
+                    ProbabilityEmergency = "",
                 };
 
                 return PartialView("_RegionPartial", regionInfo);
             }
             catch (Exception ex)
             {
-                throw;
+                return BadRequest();
             }
         }
     }
