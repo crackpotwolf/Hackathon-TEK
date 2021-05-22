@@ -1,10 +1,13 @@
 # from app import app
+from requests import status_codes
 from app.data_getting.parsing.pogodaklimat_parser import POGODAKLIMAT_SOURCE_DATA
+from app.data_getting.data_getting_by_api.openweathermap_data import OPENWEATHERMAP_SOURCE_DATA
 from app.json_processing.json_processor import *
 
 from datetime import datetime
 import requests
 
+from config import *
 
 def get_request(url):
   return requests.get(url=url)
@@ -36,31 +39,42 @@ class DATA_GETTER:
   def __init__(self):
     self.data = {}
 
-  def load_data(self):
+  def load_all_data(self):
 
     # получить данные по API
-    def load_data_by_api():
-      # данные потребителей, сопоставленные с объектами 0.4
-      start_time = print_start_time("data from ###")
-
-      self.data = read_from_json_in_dir(
-          filename="data_from_###.json",
-          dir="input_data"
-      )
-
-      if len(self.data) == 0:
-        api_method = ""
-        result = get_request(app.config['URL_SOURCE'] + api_method)
-        self.data += result.json()
-        write_to_json_in_dir(
-            filename="data_from_###.json",
-            data=self.data,
-            dir="input_data"
-        )
-      print_end_time("data from ###", start_time)
-
+    def get_data_by_api(regions_data):
+      start_time = print_start_time("data from Openweathermap")
+      today = datetime.today()
+      today_string = "%s.%s.%s" % (
+          str(today.day), str(today.month), str(today.year))
+      start_year = 2020
+      # получить исторические данные Openweathermap
+      openweathermap_data_obj = OPENWEATHERMAP_SOURCE_DATA()
+      openweathermap_data_obj.get_temperature_for_regions(
+          regions_data=regions_data)
+      # write_to_json_in_dir(
+      #   filename="history_openweathermap_data_obj_%s_%s.json" % (
+      #     str(start_year), today_string),
+      #   data=openweathermap_data_obj.temperature_for_regions,
+      #   dir="result_data"
+      # )
+      
+      # получить прогноз Openweathermap
+      openweathermap_data_obj.get_forecasts_for_regions(
+          regions_data=regions_data)
+      # write_to_json_in_dir(
+      #   filename="forecast_openweathermap_data_obj_%s_%s.json" % (
+      #       str(start_year), today_string),
+      #   data=openweathermap_data_obj.forecasts_for_regions,
+      #   dir="result_data"
+      # )
+      print_end_time("data from Openweathermap", start_time)
+      self.data = {**openweathermap_data_obj.temperature_for_regions, \
+                   **openweathermap_data_obj.forecasts_for_regions}
+      
     # получить данные с помощью парсера
     def get_data_from_parser():
+      start_time = print_start_time("data from Pogodaklimat")
       today = datetime.today()
       today_string = "%s.%s.%s" % (
           str(today.day), str(today.month), str(today.year))
@@ -81,9 +95,39 @@ class DATA_GETTER:
           data=pogodataklimat_parser_obj.data_station_temperature_day,
           dir="result_data"
       )
+      print_end_time("data from Pogodaklimat", start_time)
+      return pogodataklimat_parser_obj.data_station_temperature_day
 
+    # запуск получения данных парсерами
+    regions_data = get_data_from_parser()
+    
     # запуск получения данных по API
-    # load_data_by_api()
-
-    # запуск получения данных по API
-    get_data_from_parser()
+    get_data_by_api(regions_data=regions_data)
+    
+  def load_forecast_for_station(self, station_id):
+    start_time = print_start_time("data from Openweathermap")
+    today = datetime.today()
+    today_string = "%s.%s.%s" % (
+        str(today.day), str(today.month), str(today.year))
+    
+    # получить данные станции из БД
+    api_method = "/api/Weather/Get/%s"%str(station_id)
+    r = requests.get(url=URL_DB_SERVICE+api_method)
+    region_data = r.json() if r.status_code == 200 else None
+    
+    if not region_data is None:
+      # получить прогноз для станции Openweathermap
+      openweathermap_data_obj = OPENWEATHERMAP_SOURCE_DATA()
+      forecast_for_region = openweathermap_data_obj.get_forecast_for_region(
+          station_region_data=region_data,
+          station_id=station_id)
+      # write_to_json_in_dir(
+      #     filename="forecast_openweathermap_station_%s_%s.json" % (
+      #         str(station_id), today_string),
+      #     data=forecast_for_region,
+      #     dir="result_data"
+      # )
+      print_end_time("data from Openweathermap", start_time)
+      self.data = forecast_for_region
+    else:
+      self.data = None
