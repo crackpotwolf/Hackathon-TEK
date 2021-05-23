@@ -112,9 +112,21 @@ namespace Hackathon_TEK.Controllers
         {
             try
             {
-                var regions = _regionsRepos.GetListQuery().Select(p => new KeyValuePair<string, int>(p.Name, new Random().Next(0, 100)));
+                List<RegionsInfo> regionsInfo = new List<RegionsInfo>();
 
-                var regionsInfo = regions.Select(p => new RegionsInfo() { Name = p.Key, Probably = p.Value.ToString(), EventType="", ObjectType="" }).ToList();
+                var regions = _regionsRepos.GetListQuery().ToList();
+
+                foreach (var region in regions)
+                {
+                    regionsInfo.Add(new RegionsInfo 
+                    {
+                        Name = region.Name,
+                        MapId = region.MapId,
+                        Probably = new Random().Next(0, 100).ToString(),
+                        EventType = "",
+                        ObjectType = ""
+                    });
+                }
 
                 return PartialView("_RegionsPartial", regionsInfo);
             }

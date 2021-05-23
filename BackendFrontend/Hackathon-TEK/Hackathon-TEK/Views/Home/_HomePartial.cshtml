@@ -46,6 +46,12 @@
         "scrollCollapse": true
     };
 
+    var map;
+
+    // Создадим переменную, в которую будем сохранять выделенный в данный момент регион.
+    var highlightedRegion;
+    var oldCollor;
+
     $(document).ready(function () {
         flatpickr('.calendars', {
             dateFormat: "d.m.Y",
@@ -91,7 +97,7 @@
 
     function initMap(regions)
     {
-        var map = new ymaps.Map('YMapsID',
+        map = new ymaps.Map('YMapsID',
         {
             center: [65, 100],
             zoom: 3,
@@ -150,9 +156,6 @@
                 regionCollections[iso].properties.iso = iso;
             });
 
-            // Создадим переменную, в которую будем сохранять выделенный в данный момент регион.
-            var highlightedRegion;
-
             for (var regionName in regionCollections)
             {
                 // Добавим коллекцию на карту.
@@ -183,10 +186,12 @@
                     // Если на карте выделен регион, то мы снимаем с него выделение.
                     if (highlightedRegion) {
                         highlightedRegion.options.set({ fillOpacity: 0.3 })
+                        highlightedRegion.options.set({ fillColor: oldCollor })
                     }
 
                     // Выделим регион.
-                    region.options.set({ fillOpacity: 1 });
+                    oldCollor = region.options._options.fillColor;
+                    region.options.set({ fillColor: '7B68EE' });
 
                     // Сохраним ссылку на выделенный регион.
                     highlightedRegion = region;
@@ -205,15 +210,16 @@
                         }
                     });
 
+                    console.log($('#' + region.properties.iso));
+                    $('#' + region.properties.iso).parent().addClass('regionsTable').siblings().removeClass('regionsTable');
                 });
             }
         })
+    }
 
-        function fillRegion(region)
-        {
-            $("#Region").empty();
-            $("#Region").html(region);
-        }
+    function fillRegion(region) {
+        $("#Region").empty();
+        $("#Region").html(region);
     }
 
     function fillRegions(regions)

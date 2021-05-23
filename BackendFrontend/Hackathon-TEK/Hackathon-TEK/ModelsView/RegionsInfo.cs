@@ -7,6 +7,8 @@ namespace Hackathon_TEK.ModelsView
 {
     public class RegionsInfo
     {
+        public string MapId { get; set; }
+
         public string Name { get; set; }
 
         public string Probably { get; set; }

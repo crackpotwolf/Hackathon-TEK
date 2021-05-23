@@ -45,3 +45,7 @@
     color: #465457;
     margin: 10px;
 }
+
+.table tbody tr.regionsTable td {
+    background-color: #ddd;
+}
