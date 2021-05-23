@@ -2,6 +2,7 @@
 using Hackathon_TEK.Models;
 using Hackathon_TEK.ModelsView;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.Extensions.Logging;
 using System;
@@ -52,9 +53,9 @@ namespace Hackathon_TEK.Controllers
             {
                 //var regions = _regionsRepos.GetListQuery().Select(p => new KeyValuePair<string, int>(p.MapId,new Random().Next(0,6)));
                 var analyzes = _analyzeRepository.GetListQuery()
-                    .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture))
-                    .Select(p => new KeyValuePair<string, int>(p.Region.MapId, CalculateVariance(p.Probability)));
-                return analyzes.ToDictionary(p=>p.Key, p=>p.Value);
+                    .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)).Include(p=>p.Region).ToList()
+                    .Select(p => new KeyValuePair<string, int>(p.Region.MapId, CalculateVariance(p.Probability))).ToDictionary(p => p.Key, p => p.Value);
+                return analyzes;
             }
             catch (Exception ex)
             {
@@ -119,7 +120,7 @@ namespace Hackathon_TEK.Controllers
                     Humidity = weather != null ? $"{weather.HumidityMax} %" : "-",
                     Fires = fire!=null ? $"{fire.Confidence} %" : "-",
                     Earthquake = earth!=null ? earth.Magnitude.ToString() : "-",
-                    ProbabilityEmergency = analyze!=null ? $"{analyze.Probability*100} %" : "-",
+                    ProbabilityEmergency = analyze!=null ? $"{Math.Round(analyze.Probability*100, 2)} %" : "-",
                     Damage = analyze != null ? $"{analyze.ObjectType}" : "-",
                     Event= analyze != null ? $"{analyze.EventType}" : "-"
                 };
@@ -143,9 +144,9 @@ namespace Hackathon_TEK.Controllers
 
                 var analyzeData = _analyzeRepository.GetListQuery()
                     .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture))
-                    .Select(p=>new RegionsInfo() { Name=p.Region.Name, Probably=(p.Probability*100).ToString(), EventType=p.EventType, ObjectType=p.ObjectType});
+                    .Select(p=>new RegionsInfo() { Name=p.Region.Name, Probably=(Math.Round(p.Probability*100, 2)).ToString(), EventType=p.EventType, ObjectType=p.ObjectType});
 
-                return PartialView("_RegionsPartial", regionsInfo);
+                return PartialView("_RegionsPartial", analyzeData);
             }
             catch (Exception ex)
             {
