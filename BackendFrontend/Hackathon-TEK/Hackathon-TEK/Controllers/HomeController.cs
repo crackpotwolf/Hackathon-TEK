@@ -153,12 +153,14 @@ namespace Hackathon_TEK.Controllers
                         ObjectType = ""
                     });
                 }
-
+                
                 var analyzeData = _analyzeRepository.GetListQuery()
                     .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture))
-                    .Select(p=>new RegionsInfo() { MapId = p.Region.MapId, Name =p.Region.Name, Probably=(Math.Round(p.Probability*100, 2)).ToString(), EventType=p.EventType, ObjectType=p.ObjectType});
+                    .Include(p => p.Region)
+                    .ToList();
 
-                return PartialView("_RegionsPartial", analyzeData);
+                return PartialView("_RegionsPartial", analyzeData
+                    .Select(p => new RegionsInfo() { MapId = p.Region.MapId, Name = p.Region.Name, Probably = (Math.Round(p.Probability * 100, 2)).ToString(), EventType = p.EventType, ObjectType = p.ObjectType }));
             }
             catch (Exception ex)
             {

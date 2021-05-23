@@ -153,7 +153,7 @@ namespace Hackathon_TEK.Controllers.API
                             RegionId = w.RegionId,
                             FireId = (int?)r.Id
                         };
-                    }).ToList();
+                    }).Take(1_000_000).ToList();
                 var resIds = res.Select(p => p.Id).ToList();
                 var excepted = _repository.GetListQuery().Where(p => !resIds.Any(t => t == p.Id))
                     .Select(w => new

@@ -10,15 +10,17 @@
  <li>Определение риска для разных объектов ТЭК;</li>
  <li>Сбор обратной связи;</li>  
  </ul>
-<h4>Основной стек технологий:</h4>
-<ul>
-	<li>HTML, CSS, JavaScript.</li>
-	<li>C#, Asp.Net Core.</li>
-	<li>Python, Flask</li>
-	<li>Postgresql</li>
-	<li>Docker<li>
-	<li>Git.<li> 
-</ul>
+
+### Основной стек технологий:
+- HTML, CSS, JavaScript
+- C#, Asp.Net Core
+- Python, Flask
+- Postgresql
+- Ansible
+- Docker
+- Git
+
+  
 
 
 СРЕДА ЗАПУСКА
@@ -40,7 +42,7 @@ docker-compose build
 Запустить собранный контейнер:
 
 ~~~
-docker run -it --rm -p {порт}:80 -d --mount type=bind,src={путь к исходному коду},dst={путь к папке} --name {название образа} {тэг}
+docker run -it --rm -p {порт}:80 -d --mount type=bind,src={путь к директории с данными (virtual machine)},dst={путь к директории с данными (container)} --name {название образа} {тэг}
 ~~~
 
 В проектах на Python список требуемых пакетов перечислен в файлах requirements.txt

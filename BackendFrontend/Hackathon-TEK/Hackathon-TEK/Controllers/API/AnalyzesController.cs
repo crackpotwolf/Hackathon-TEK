@@ -37,7 +37,8 @@ namespace Hackathon_TEK.Controllers.API
         {
             try
             {
-                var regions = _analyzesRepository.GetList().Join(
+                var regions = _analyzesRepository.GetList()
+                    .Join(
                     data,
                     p => new { p.Date, p.RegionId },
                     d => new { d.Date, d.RegionId },
@@ -47,7 +48,7 @@ namespace Hackathon_TEK.Controllers.API
                         return d;
                     })
                     .ToList();
-                _analyzesRepository.AddRange(data.ExceptBy(regions, p => new { p.Date, p.RegionId }));
+                _analyzesRepository.AddRange(data.ExceptBy(regions, p => new { p.Date, p.RegionId }).ToList());
 
                 _analyzesRepository.UpdateRange(regions);
                 return Ok();
