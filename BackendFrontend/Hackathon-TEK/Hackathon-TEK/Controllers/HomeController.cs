@@ -53,7 +53,7 @@ namespace Hackathon_TEK.Controllers
             {
                 //var regions = _regionsRepos.GetListQuery().Select(p => new KeyValuePair<string, int>(p.MapId,new Random().Next(0,6)));
                 var analyzes = _analyzeRepository.GetListQuery()
-                    .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)).Include(p=>p.Region).ToList()
+                    .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)).Include(p => p.Region).ToList()
                     .Select(p => new KeyValuePair<string, int>(p.Region.MapId, CalculateVariance(p.Probability))).ToDictionary(p => p.Key, p => p.Value);
                 return analyzes;
             }
@@ -64,7 +64,7 @@ namespace Hackathon_TEK.Controllers
             }
         }
 
-        public IActionResult GetProbabilities(string date, string region)
+        public Dictionary<string, double> GetProbabilities(string date, string region)
         {
             try
             {
@@ -73,12 +73,12 @@ namespace Hackathon_TEK.Controllers
                 var data = _analyzeRepository.GetListQuery()
                     .Where(p => p.RegionId == regionObj.Id && p.Date.Date >= dateTime.AddDays(-3) && p.Date.Date <= dateTime.AddDays(3))
                     .OrderBy(p => p.Date)
-                    .Select(p => new KeyValuePair<string, double>(p.Date.ToString("dd.MM.yyyy"), Math.Round(p.Probability * 100, 2))).ToDictionary(p=>p.Key,p=>p.Value);
-                return Ok(data);
+                    .Select(p => new KeyValuePair<string, double>(p.Date.ToString("dd.MM.yyyy"), Math.Round(p.Probability * 100, 2))).ToDictionary(p => p.Key, p => p.Value);
+                return data;
             }
             catch
             {
-                return BadRequest();
+                return null;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Hackathon_TEK.Controllers
             else return 4;
         }
 
-        public IActionResult GetRegion(string region, string region_name, string date) 
+        public IActionResult GetRegion(string region, string region_name, string date)
         {
             try
             {
@@ -103,18 +103,18 @@ namespace Hackathon_TEK.Controllers
                 var dateTime = DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
                 Weather weather = null;
 
-                if(_weatherRepository.GetListQuery().Any(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id))
-                weather = _weatherRepository.GetListQuery()
-                    .First(p => p.Date.Date == dateTime
-                        && p.RegionId==regionObj.Id);
+                if (_weatherRepository.GetListQuery().Any(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id))
+                    weather = _weatherRepository.GetListQuery()
+                        .First(p => p.Date.Date == dateTime
+                            && p.RegionId == regionObj.Id);
 
                 Fire fire = null;
 
-                if(_fireRepository.GetListQuery()
+                if (_fireRepository.GetListQuery()
                     .Any(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id))
-                        fire = _fireRepository.GetListQuery()
-                            .Where(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id)
-                            .OrderByDescending(p=>p.Confidence).First();
+                    fire = _fireRepository.GetListQuery()
+                        .Where(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id)
+                        .OrderByDescending(p => p.Confidence).First();
 
                 Earthquake earth = null;
 
@@ -128,19 +128,24 @@ namespace Hackathon_TEK.Controllers
                 if (_analyzeRepository.GetListQuery().Any(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id))
                     analyze = _analyzeRepository.GetListQuery().First(p => p.Date.Date == dateTime && p.RegionId == regionObj.Id);
 
+
+
+                var tmp = GetProbabilities(date, region);
                 RegionInfo regionInfo = new RegionInfo()
                 {
                     Region = region,
                     Name = region_name,
-                    Temperature = weather!=null ? weather.TempAverage >= 0 ? $"+{weather.TempAverage}" : $"{weather.TempAverage}" : "-",
+                    Temperature = weather != null ? weather.TempAverage >= 0 ? $"+{weather.TempAverage}" : $"{weather.TempAverage}" : "-",
                     WindSpeed = weather != null ? $"{weather.WindSpeedMax} м/с" : "-",
                     Description = weather != null ? weather.CloudsMax.ToString() : "-",
                     Humidity = weather != null ? $"{weather.HumidityMax} %" : "-",
-                    Fires = fire!=null ? $"{fire.Confidence} %" : "-",
-                    Earthquake = earth!=null ? earth.Magnitude.ToString() : "-",
-                    ProbabilityEmergency = analyze!=null ? $"{Math.Round(analyze.Probability*100, 2)} %" : "-",
+                    Fires = fire != null ? $"{fire.Confidence} %" : "-",
+                    Earthquake = earth != null ? earth.Magnitude.ToString() : "-",
+                    ProbabilityEmergency = analyze != null ? $"{Math.Round(analyze.Probability * 100, 2)} %" : "-",
                     Damage = analyze != null ? $"{analyze.ObjectType}" : "-",
-                    Event= analyze != null ? $"{analyze.EventType}" : "-"
+                    Event = analyze != null ? $"{analyze.EventType}" : "-",
+                    ChartData = string.Join(';', tmp.Values),
+                    ChartLabels = string.Join(',', tmp.Keys)
                 };
 
                 return PartialView("_RegionPartial", regionInfo);
@@ -152,7 +157,7 @@ namespace Hackathon_TEK.Controllers
             }
         }
 
-        public IActionResult GetRegionsWithProbably(string date) 
+        public IActionResult GetRegionsWithProbably(string date)
         {
             try
             {
@@ -162,7 +167,7 @@ namespace Hackathon_TEK.Controllers
 
                 foreach (var region in regions)
                 {
-                    regionsInfo.Add(new RegionsInfo 
+                    regionsInfo.Add(new RegionsInfo
                     {
                         Name = region.Name,
                         MapId = region.MapId,
@@ -171,7 +176,7 @@ namespace Hackathon_TEK.Controllers
                         ObjectType = ""
                     });
                 }
-                
+
                 var analyzeData = _analyzeRepository.GetListQuery()
                     .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture))
                     .Include(p => p.Region)
@@ -187,7 +192,7 @@ namespace Hackathon_TEK.Controllers
             }
         }
 
-        public virtual IActionResult GetFeedback() 
+        public virtual IActionResult GetFeedback()
         {
             // Cписок типов событий
             var eventTypes = _reasonsRepository.GetListQuery().Select(p => p.EventType).Distinct().ToList();
@@ -200,7 +205,7 @@ namespace Hackathon_TEK.Controllers
             return PartialView("_FeedbackPartial");
         }
 
-        public virtual void PostFeedback(string date, string eventTypes, string objectTypes, string details, string region) 
+        public virtual void PostFeedback(string date, string eventTypes, string objectTypes, string details, string region)
         {
             try
             {
@@ -215,7 +220,7 @@ namespace Hackathon_TEK.Controllers
                 reason.RegionId = regionObj.Id;
                 _reasonsRepository.Add(reason);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }

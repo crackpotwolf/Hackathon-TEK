@@ -19,5 +19,8 @@ namespace Hackathon_TEK.ModelsView
         public string ProbabilityEmergency { get; set; }
 
         public string Event { get; set; }
+
+        public string ChartLabels { get; set; }
+        public string ChartData { get; set; }
     }
 }

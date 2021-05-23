@@ -3,8 +3,10 @@
 <div class="card-body">
 
     <h4 id="RegionName" value="@Html.DisplayFor(model => model.Region)" class="text-center">@Html.DisplayFor(model => model.Name)</h4>
-    <canvas id="myChart" style="width: 100%; max-height: 100px; height: 100px;"></canvas>
-
+    @if (!string.IsNullOrEmpty(Model.ChartLabels))
+    {
+        <canvas id="myChart" style="width: 100%; height: 120px;"></canvas>
+    }
     <table class="table table-striped">
         <tbody>
             <tr>
@@ -39,27 +41,19 @@
     </table>
 
     <h4 class="text-center">Вероятность возникновения ЧС: @Html.DisplayFor(model => model.ProbabilityEmergency)</h4>
-
-
-
-    <div class="text-center">
-        <button type="submit" onClick="GetFeedback(this)" href="#" data-toggle="modal" data-target="#ModalPartial"
-                class="btn btn-outline-primary">
-            Обратная связь
-        </button>
-    </div>
-
 </div>
 <script>
     var ctx = document.getElementById('myChart');
+    var labels = '@Model.ChartLabels';
+    var data = '@Model.ChartData'.replaceAll(',','.');
     //const labels = Utils.months({ count: 7 });
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: [1,2,3,4,5,6,7],
+            labels: labels.split(','),
             datasets: [{
                 label: 'My First Dataset',
-                data: [65, 59, 80, 81, 56, 55, 40],
+                data: data.split(';'),
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
@@ -73,27 +67,4 @@
             }
         }
     });
-</script>
-<script>
-    // Обновление страницы
-    var refreshRoute = {
-        LoadAction: LoadList,
-        data: undefined
-    }
-
-    function GetFeedback(obj) {
-        $.ajax({
-            url: '@Url.Action("GetFeedback", "Home")',
-            type: "GET",
-            data: { },
-            success: function (result) {
-                ModalBody(result, refreshRoute);
-            },
-            error: function (error) {
-                console.log("ajax Create error", error);
-            },
-            complete: function () {
-            }
-        });
-    };
 </script>

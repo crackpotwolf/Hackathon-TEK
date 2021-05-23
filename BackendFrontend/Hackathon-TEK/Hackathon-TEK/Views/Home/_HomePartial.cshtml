@@ -15,7 +15,17 @@
 
     <div class="col-xl-4">
         <div class="card shadow mb-4 maprows">
-            <div class="card-header card-header py-3 d-flex flex-row align-items-center"><label>Регион</label></div>
+            <div class="card-header card-header py-3 d-flex flex-row align-items-center d-flex justify-content-between">
+                <label>Регион</label>
+
+
+                <div class="text-center">
+                    <button type="submit" onClick="GetFeedback(this)" href="#" data-toggle="modal" data-target="#ModalPartial"
+                            class="btn btn-outline-primary">
+                        Обратная связь
+                    </button>
+                </div>
+            </div>
 
             <div class="card-body align-middle" id="Region">
                 <h4 class="text-center">Выберите регион ...</h4>
@@ -23,7 +33,29 @@
 
         </div>
     </div>
+    <script>
 
+    // Обновление страницы
+    var refreshRoute = {
+        LoadAction: LoadList,
+        data: undefined
+    }
+    function GetFeedback(obj) {
+        $.ajax({
+            url: '@Url.Action("GetFeedback", "Home")',
+            type: "GET",
+            data: { },
+            success: function (result) {
+                ModalBody(result, refreshRoute);
+            },
+            error: function (error) {
+                console.log("ajax Create error", error);
+            },
+            complete: function () {
+            }
+        });
+    };
+    </script>
 </div>
 
 <div class="row">
