@@ -326,8 +326,11 @@ namespace Hackathon_TEK.Controllers.API
             try
             {
                 var results = new List<Weather>();
-                var name = data.station_region.Split(',').First();
-                var region = _regionRepository.GetListQuery().First(p => p.Name == name);
+                var name = data.station_region;
+                if (name.Contains(','))
+                    name = name.Split(',').First();
+                var region = _regionRepository.GetListQuery().FirstOrDefault(p => p.Name == name);
+                if (region == null) return Ok("Не получилось");
                 foreach (var item in data.weather_dates)
                 {
                     var res = new Weather();
