@@ -240,7 +240,7 @@ namespace Hackathon_TEK.Controllers.API
         /// Запись списка данных о погоде
         /// </summary>
         /// <returns></returns>
-        [HttpPost("Post")]
+        [HttpPost("PostNew")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), 400)]
