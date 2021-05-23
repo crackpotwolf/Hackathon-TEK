@@ -15,6 +15,7 @@
 - HTML, CSS, JavaScript
 - C#, Asp.Net Core
 - Python, Flask
+- Elasticsearch\Kibana
 - Postgresql
 - Ansible
 - Docker
