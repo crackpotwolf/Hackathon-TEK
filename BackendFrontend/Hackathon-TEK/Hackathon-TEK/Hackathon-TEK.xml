@@ -58,6 +58,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Hackathon_TEK.Controllers.API.WeatherController.GetWithReason">
+            <summary>
+            Получение списка погоды
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Hackathon_TEK.Controllers.API.WeatherController.Get">
             <summary>
             Получение списка погоды

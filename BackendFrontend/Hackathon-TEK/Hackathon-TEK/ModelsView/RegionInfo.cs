@@ -17,5 +17,7 @@ namespace Hackathon_TEK.ModelsView
         public string Earthquake { get; set; }
         public string Damage { get; set; }
         public string ProbabilityEmergency { get; set; }
+
+        public string Event { get; set; }
     }
 }
