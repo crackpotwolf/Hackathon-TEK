@@ -156,7 +156,7 @@ namespace Hackathon_TEK.Controllers
 
                 var analyzeData = _analyzeRepository.GetListQuery()
                     .Where(p => p.Date.Date == DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture))
-                    .Select(p=>new RegionsInfo() { Name=p.Region.Name, Probably=(Math.Round(p.Probability*100, 2)).ToString(), EventType=p.EventType, ObjectType=p.ObjectType});
+                    .Select(p=>new RegionsInfo() { MapId = p.Region.MapId, Name =p.Region.Name, Probably=(Math.Round(p.Probability*100, 2)).ToString(), EventType=p.EventType, ObjectType=p.ObjectType});
 
                 return PartialView("_RegionsPartial", analyzeData);
             }

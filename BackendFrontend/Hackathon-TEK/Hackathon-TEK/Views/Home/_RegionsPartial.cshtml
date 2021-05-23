@@ -36,7 +36,8 @@
         {
             if (geoObject.properties.iso == region)
             {
-                highlightedRegion.options.set({ fillColor: oldCollor })
+                if (highlightedRegion != null)
+                    highlightedRegion.options.set({ fillColor: oldCollor })
 
                 // Выделим регион.
                 oldCollor = geoObject.options._options.fillColor;

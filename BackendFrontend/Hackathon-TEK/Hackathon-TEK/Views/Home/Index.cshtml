@@ -33,7 +33,7 @@
                     </span>
 
                     <input class="calendars" type="text" id="date" placeholder="Пожалуйста, выберите дату"
-                   value="@(DateTime.UtcNow.AddDays(-1).DateTimeToString("dd.MM.yyyy"))" onchange="init()" data-input>
+                   value="@(DateTime.UtcNow.AddDays(-2).DateTimeToString("dd.MM.yyyy"))" onchange="init()" data-input>
                 </div>
             </div>
         </div>
