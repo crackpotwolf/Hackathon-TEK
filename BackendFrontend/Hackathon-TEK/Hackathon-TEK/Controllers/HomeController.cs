@@ -64,6 +64,24 @@ namespace Hackathon_TEK.Controllers
             }
         }
 
+        public IActionResult GetProbabilities(string date, string region)
+        {
+            try
+            {
+                var dateTime = DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                var regionObj = _regionsRepos.GetListQuery().First(p => p.MapId == region);
+                var data = _analyzeRepository.GetListQuery()
+                    .Where(p => p.RegionId == regionObj.Id && p.Date.Date >= dateTime.AddDays(-3) && p.Date.Date <= dateTime.AddDays(3))
+                    .OrderBy(p => p.Date)
+                    .Select(p => new KeyValuePair<string, double>(p.Date.ToString("dd.MM.yyyy"), Math.Round(p.Probability * 100, 2))).ToDictionary(p=>p.Key,p=>p.Value);
+                return Ok(data);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         public int CalculateVariance(double probability)
         {
             if (probability <= 0.2)
