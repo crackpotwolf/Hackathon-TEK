@@ -108,6 +108,83 @@ namespace Hackathon_TEK.Controllers.API
             }
         }
 
+
+        ///// <summary>
+        ///// Получение списка погоды
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet("GetWithFires")]
+        //[Produces("application/json")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(Exception), 400)]
+        //public IActionResult GetWithFires()
+        //{
+        //    try
+        //    {
+        //        var res = _repository.GetList().Join(
+        //            _reasonRepository.GetList(),
+        //            w => new { w.Date.Date, w.RegionId },
+        //            r => new { r.Date.Date, r.RegionId },
+        //            (w, r) =>
+        //            {
+        //                return new
+        //                {
+        //                    Id = w.Id,
+        //                    StationId = w.StationId,
+        //                    StationName = w.StationName,
+        //                    StationRegion = w.StationRegion,
+        //                    StationLat = w.StationLat,
+        //                    StationLon = w.StationLon,
+        //                    Date = w.Date,
+        //                    TempMin0 = w.TempMin0,
+        //                    TempAverage0 = w.TempAverage0,
+        //                    TempMax0 = w.TempMax0,
+        //                    TempDifNorm0 = w.TempDifNorm0,
+        //                    Percipitation = w.Percipitation,
+        //                    TempAverage = w.TempAverage,
+        //                    PressureMax = w.PressureMax,
+        //                    HumidityMax = w.HumidityMax,
+        //                    WindSpeedMax = w.WindSpeedMax,
+        //                    WindDegMax = w.WindDegMax,
+        //                    CloudsMax = w.CloudsMax,
+        //                    RegionId = w.RegionId,
+        //                    Fire = (int?)r.Id
+        //                };
+        //            }).ToList();
+        //        var resIds = res.Select(p => p.Id).ToList();
+        //        var excepted = _repository.GetListQuery().Where(p => !resIds.Any(t => t == p.Id))
+        //            .Select(w => new
+        //            {
+        //                Id = w.Id,
+        //                StationId = w.StationId,
+        //                StationName = w.StationName,
+        //                StationRegion = w.StationRegion,
+        //                StationLat = w.StationLat,
+        //                StationLon = w.StationLon,
+        //                Date = w.Date,
+        //                TempMin0 = w.TempMin0,
+        //                TempAverage0 = w.TempAverage0,
+        //                TempMax0 = w.TempMax0,
+        //                TempDifNorm0 = w.TempDifNorm0,
+        //                Percipitation = w.Percipitation,
+        //                TempAverage = w.TempAverage,
+        //                PressureMax = w.PressureMax,
+        //                HumidityMax = w.HumidityMax,
+        //                WindSpeedMax = w.WindSpeedMax,
+        //                WindDegMax = w.WindDegMax,
+        //                CloudsMax = w.CloudsMax,
+        //                RegionId = w.RegionId,
+        //                ReasonId = (int?)null
+        //            });
+        //        res.AddRange(excepted);
+        //        return Ok(res);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
+
         /// <summary>
         /// Получение списка погоды
         /// </summary>
@@ -249,7 +326,8 @@ namespace Hackathon_TEK.Controllers.API
             try
             {
                 var results = new List<Weather>();
-                var region = _regionRepository.GetListQuery().First(p => p.Name == data.station_region);
+                var name = data.station_region.Split(',').First();
+                var region = _regionRepository.GetListQuery().First(p => p.Name == name);
                 foreach (var item in data.weather_dates)
                 {
                     var res = new Weather();
